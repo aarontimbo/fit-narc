@@ -1,0 +1,24 @@
+allprojects {
+    apply plugin: 'groovy'
+    group = 'com.atimbo.fit-narc'
+    version = '0.1'
+
+}
+
+subprojects {
+    repositories {
+        mavenLocal()
+
+        mavenCentral()
+    }
+
+    dependencies {
+        compile "org.codehaus.groovy:groovy-all:${groovyVersion}"
+    }
+}
+
+project(':services:recipe:recipe-entities') {
+    dependencies {
+        compile project(':common:common-api')
+    }
+}

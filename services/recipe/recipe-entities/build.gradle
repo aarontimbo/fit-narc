@@ -1,0 +1,12 @@
+/**
+ * build script for recipe-entities project
+ */
+
+dependencies {
+    compile 'javax.persistence:persistence-api:1.0-rev-1'
+    compile 'joda-time:joda-time:2.1'
+
+    testCompile "org.spockframework:spock-core:${spockVersion}"
+    testCompile 'junit:junit:4.11'
+
+}

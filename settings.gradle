@@ -1,0 +1,1 @@
+include 'common:common-api', 'services:recipe:recipe-api', 'services:recipe:recipe-entities'
