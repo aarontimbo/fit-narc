@@ -19,6 +19,6 @@ subprojects {
 
 project(':services:recipe:recipe-entities') {
     dependencies {
-        compile project(':common:common-api')
+        compile project(':libs:commons:common-types')
     }
 }

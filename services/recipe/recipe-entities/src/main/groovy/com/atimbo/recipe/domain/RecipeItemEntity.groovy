@@ -7,8 +7,6 @@ import org.joda.time.LocalDate
 import javax.persistence.*
 
 @Entity
-@Table(name = 'recipe_item')
-@EqualsAndHashCode()
 class RecipeItemEntity {
 
     @Id

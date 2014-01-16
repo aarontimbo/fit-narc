@@ -1,1 +1,1 @@
-include 'common:common-api', 'services:recipe:recipe-api', 'services:recipe:recipe-entities'
+include 'libs:commons:common-types', 'services:recipe:recipe-api', 'services:recipe:recipe-entities'
