@@ -1,0 +1,8 @@
+/**
+ * build script for fit-narc-test project
+ */
+dependencies {
+    compile project(':libs:fit-narc-core:fit-narc-service')
+
+    compile "org.spockframework:spock-core:${spockVersion}"
+}

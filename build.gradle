@@ -1,3 +1,6 @@
+/**
+ * fit-narc main project build script
+ */
 allprojects {
     apply plugin: 'groovy'
     group = 'com.atimbo.fit-narc'
@@ -14,11 +17,9 @@ subprojects {
 
     dependencies {
         compile "org.codehaus.groovy:groovy-all:${groovyVersion}"
-    }
-}
 
-project(':services:recipe:recipe-entities') {
-    dependencies {
-        compile project(':libs:commons:common-types')
+        testCompile "org.spockframework:spock-core:${spockVersion}"
+        testCompile 'junit:junit:4.11'
+        testCompile 'com.h2database:h2:1.3.168'
     }
 }

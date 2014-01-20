@@ -1,0 +1,8 @@
+/**
+ * build script for recipe-test project
+ */
+
+dependencies {
+    compile project(':libs:fit-narc-core:fit-narc-test')
+    compile project(':services:recipe:recipe-entities')
+}
