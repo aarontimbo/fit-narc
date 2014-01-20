@@ -20,8 +20,8 @@ class RecipeEntity {
     @Column(name = 'description', nullable = true)
     String description
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = 'recipe', fetch = FetchType.EAGER)
-    SortedSet<RecipeItemEntity> items = [] as SortedSet
+    @Column(name = 'entered_by', nullable = false, length = 50)
+    String enteredBy
 
     @Column(name = 'date_created', nullable = false)
     LocalDate dateCreated = new LocalDate()

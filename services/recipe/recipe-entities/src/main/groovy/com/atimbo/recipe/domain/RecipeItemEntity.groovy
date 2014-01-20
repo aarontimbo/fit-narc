@@ -10,7 +10,7 @@ import javax.persistence.*
 class RecipeItemEntity {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id
 
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
@@ -20,12 +20,16 @@ class RecipeItemEntity {
     @Column(name = 'item_type', nullable = false)
     RecipeItemType type
 
+    /**
+     * Order recipe item types
+     */
     @Column(name = 'sort_order', nullable = false)
-    Integer sortOrder
+    Integer sortOrder = 1
 
     @Column(name = 'date_created', nullable = false)
     LocalDate dateCreated = new LocalDate()
 
     @Column(name = 'last_updated', nullable = false)
     LocalDate lastUpdated
+
 }
