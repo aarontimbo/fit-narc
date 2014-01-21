@@ -10,6 +10,6 @@ import javax.persistence.*
 class DirectionEntity extends RecipeItemEntity {
 
     @Column(name = 'description', nullable = false)
-    String text
+    String description
 
 }
