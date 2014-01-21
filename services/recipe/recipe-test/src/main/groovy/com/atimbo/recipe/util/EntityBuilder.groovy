@@ -8,7 +8,10 @@ import org.hibernate.SessionFactory
 class EntityBuilder extends BaseEntityBuilder {
 
     static List<Class<?>> getAllEntities() {
-        return [RecipeEntity]
+        return [
+                RecipeEntity,
+                RecipeSourceEntity
+        ]
     }
 
     EntityBuilder(SessionFactory sessionFactory) {

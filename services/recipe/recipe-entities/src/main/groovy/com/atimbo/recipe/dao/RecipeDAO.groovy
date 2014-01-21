@@ -11,9 +11,8 @@ class RecipeDAO extends AbstractDAO<RecipeEntity> {
         super(sessionFactory)
     }
 
-
-    RecipeEntity create(RecipeEntity recipeEntity) {
-        persist(recipeEntity)
+    RecipeEntity create(RecipeEntity recipe) {
+        persist(recipe)
     }
 
     RecipeEntity findById(Long id) {

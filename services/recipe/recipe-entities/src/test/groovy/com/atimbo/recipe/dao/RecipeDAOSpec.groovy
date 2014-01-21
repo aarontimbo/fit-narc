@@ -12,7 +12,7 @@ class RecipeDAOSpec extends DAOSpecification<RecipeDAO> {
 
     def setup() {
         builder = new EntityBuilder(sessionFactory)
-        recipeEntity = new RecipeEntity(title: 'Meatstraganza!')
+        recipeEntity = new RecipeEntity(title: 'Meatstraganza!', createdBy: 'ast')
     }
 
     @Override
