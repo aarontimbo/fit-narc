@@ -7,4 +7,8 @@ dependencies {
     compile "com.yammer.dropwizard:dropwizard-testing:${dropwizardVersion}"
     compile "com.yammer.dropwizard:dropwizard-hibernate:${dropwizardVersion}"
     compile "com.yammer.dropwizard:dropwizard-migrations:${dropwizardVersion}"
+
+    compile 'com.fasterxml.jackson.core:jackson-databind:2.1.1'
+    compile "org.springframework:spring-context:${springVersion}"
+    compile 'javax.inject:javax.inject:1'
 }

@@ -3,9 +3,10 @@
  */
 
 dependencies {
+    compile project(':services:recipe:recipe-api')
     compile project(':libs:commons:common-types')
+    compile project(':libs:commons:common-utils')
     compile project(':libs:fit-narc-core:fit-narc-service')
-    compile 'javax.persistence:persistence-api:1.0-rev-1'
     compile 'joda-time:joda-time:2.1'
 
     testCompile project (':libs:fit-narc-core:fit-narc-test')
