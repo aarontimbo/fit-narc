@@ -4,7 +4,6 @@ import com.yammer.dropwizard.hibernate.AbstractDAO
 import org.hibernate.SessionFactory
 
 class BaseEntityBuilder {
-
     SessionFactory sessionFactory
 
     Map<Class, AbstractDAO> daos = [:]

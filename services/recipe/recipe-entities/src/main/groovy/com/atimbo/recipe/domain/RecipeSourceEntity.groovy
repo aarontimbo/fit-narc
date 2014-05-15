@@ -11,7 +11,7 @@ import javax.persistence.Table
 @Entity
 @Table(name = 'recipe_source')
 @EqualsAndHashCode()
-class RecipeSourceEntity extends RecipeItemEntity {
+class RecipeSourceEntity extends AbstractRecipeItemEntity {
 
     @Column(name = 'author', nullable = false)
     String author

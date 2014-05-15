@@ -1,6 +1,7 @@
 include 'libs:fit-narc-core:fit-narc-service',
         'libs:fit-narc-core:fit-narc-test',
         'libs:commons:common-types',
+        'libs:commons:common-utils',
         'services:recipe:recipe-api',
         'services:recipe:recipe-entities',
         'services:recipe:recipe-test'

@@ -5,13 +5,14 @@ import org.joda.time.LocalDate
 import javax.persistence.*
 
 @Entity
-abstract class RecipeItemEntity {
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+abstract class AbstractRecipeItemEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.TABLE)
     Long id
 
-    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = 'recipe_id', nullable = false)
     RecipeEntity recipe
 

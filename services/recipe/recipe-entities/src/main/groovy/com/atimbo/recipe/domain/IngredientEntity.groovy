@@ -7,7 +7,7 @@ import javax.persistence.*
 @Entity
 @Table(name = 'ingredient')
 @EqualsAndHashCode()
-class IngredientEntity extends RecipeItemEntity {
+class IngredientEntity extends AbstractRecipeItemEntity {
 
     /**
      * Links ingredient to a USDA nutrient database food

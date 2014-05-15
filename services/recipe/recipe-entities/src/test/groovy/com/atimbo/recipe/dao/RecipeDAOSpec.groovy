@@ -1,5 +1,6 @@
 package com.atimbo.recipe.dao
 
+import com.atimbo.common.utils.UniqueIDGenerator
 import com.atimbo.recipe.domain.RecipeEntity
 import com.atimbo.recipe.util.EntityBuilder
 import com.atimbo.test.dao.DAOSpecification
@@ -12,7 +13,9 @@ class RecipeDAOSpec extends DAOSpecification<RecipeDAO> {
 
     def setup() {
         builder = new EntityBuilder(sessionFactory)
-        recipeEntity = new RecipeEntity(title: 'Meatstraganza!', createdBy: 'ast')
+        recipeEntity = new RecipeEntity(uuId: UniqueIDGenerator.generateUUId(),
+                                        title: 'Meatstraganza!',
+                                        createdBy: 'ast')
     }
 
     @Override
@@ -51,4 +54,6 @@ class RecipeDAOSpec extends DAOSpecification<RecipeDAO> {
         recipe == expectedRecipe
 
     }
+
+
 }

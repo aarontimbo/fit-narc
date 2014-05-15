@@ -9,6 +9,8 @@ class EntityBuilder extends BaseEntityBuilder {
 
     static List<Class<?>> getAllEntities() {
         return [
+                DirectionEntity,
+                IngredientEntity,
                 RecipeEntity,
                 RecipeSourceEntity
         ]
