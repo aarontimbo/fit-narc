@@ -1,0 +1,9 @@
+/**
+ * build script for recipe-api project
+ */
+dependencies {
+    compile project(':libs:commons:common-types')
+    compile project(':libs:fit-narc-core:fit-narc-api')
+
+    compile 'joda-time:joda-time:2.1'
+}

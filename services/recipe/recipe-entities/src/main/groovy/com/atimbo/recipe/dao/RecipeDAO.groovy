@@ -5,16 +5,20 @@ import com.sun.jersey.api.NotFoundException
 import com.yammer.dropwizard.hibernate.AbstractDAO
 import org.hibernate.SessionFactory
 import org.hibernate.criterion.Restrictions
+import org.springframework.stereotype.Repository
 
+import javax.inject.Inject
 import javax.persistence.EntityNotFoundException
 
+@Repository
 class RecipeDAO extends AbstractDAO<RecipeEntity> {
 
+    @Inject
     RecipeDAO(SessionFactory sessionFactory) {
         super(sessionFactory)
     }
 
-    RecipeEntity create(RecipeEntity recipe) {
+    RecipeEntity createOrUpdate(RecipeEntity recipe) {
         persist(recipe)
     }
 

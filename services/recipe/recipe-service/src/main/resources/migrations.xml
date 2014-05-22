@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd"
+        logicalFilePath="migrations.xml">
+
+    <changeSet author="ast" id="create_recipe_table">
+        <createTable tableName="recipe" schemaName="fitness">
+            <column name="id" type="INT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="uu_id" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="title" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="VARCHAR(255)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="created_by" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_updated_by" type="VARCHAR(50)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="date_created" type="DATETIME">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_updated" type="DATETIME">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addAutoIncrement columnDataType="int"
+                          columnName="id"
+                          incrementBy="1"
+                          schemaName="fitness"
+                          startWith="1"
+                          tableName="recipe"/>
+
+        <addUniqueConstraint columnNames="uu_id"
+                             constraintName="uu_id_constraint"
+                             deferrable="true"
+                             disabled="true"
+                             initiallyDeferred="true"
+                             schemaName="fitness"
+                             tableName="recipe" />
+
+        <addUniqueConstraint columnNames="title"
+                             constraintName="title_constraint"
+                             deferrable="true"
+                             disabled="true"
+                             initiallyDeferred="true"
+                             schemaName="fitness"
+                             tableName="recipe" />
+
+        <sql>
+            <!-- Bootstrap test data -->
+            INSERT INTO recipe (
+                uu_id
+                ,title
+                ,description
+                ,created_by
+                ,date_created
+                ,last_updated
+            )
+            VALUES (
+                REPLACE(UUID(), '-', '')
+                ,'Test Recipe'
+                ,'Test description, blah blah'
+                ,'ast'
+                ,NOW()
+                ,NOW()
+            );
+        </sql>
+
+        <rollback>
+            <dropTable tableName="recipe"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

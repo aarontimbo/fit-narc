@@ -9,6 +9,5 @@ dependencies {
     compile project(':libs:fit-narc-core:fit-narc-service')
     compile 'joda-time:joda-time:2.1'
 
-    testCompile project (':libs:fit-narc-core:fit-narc-test')
     testCompile project (':services:recipe:recipe-test')
 }
