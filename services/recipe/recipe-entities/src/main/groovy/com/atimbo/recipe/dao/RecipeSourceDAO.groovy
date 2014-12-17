@@ -4,9 +4,14 @@ import com.atimbo.recipe.domain.RecipeSourceEntity
 import com.sun.jersey.api.NotFoundException
 import com.yammer.dropwizard.hibernate.AbstractDAO
 import org.hibernate.SessionFactory
+import org.springframework.stereotype.Repository
 
+import javax.inject.Inject
+
+@Repository
 class RecipeSourceDAO extends AbstractDAO<RecipeSourceEntity> {
 
+    @Inject
     RecipeSourceDAO(SessionFactory sessionFactory) {
         super(sessionFactory)
     }

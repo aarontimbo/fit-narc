@@ -4,17 +4,19 @@ import com.atimbo.recipe.dao.DAOFactory
 import com.atimbo.recipe.dao.TestDAOFactory
 import com.atimbo.recipe.domain.RecipeEntity
 import com.atimbo.recipe.modules.builders.RecipeBuilder
-import com.atimbo.recipe.transfer.RecipeCreateRequest
+import com.atimbo.recipe.transfer.RecipeCreateUpdateRequest
 import com.atimbo.recipe.util.EntityBuilder
 import com.atimbo.test.dao.DatabaseSpecification
 
 class RecipeModuleSpec extends DatabaseSpecification {
 
+    EntityBuilder entityBuilder
     RecipeBuilder recipeBuilder
     RecipeModule module
 
     @Override
     def setup() {
+        entityBuilder = new EntityBuilder(sessionFactory)
         DAOFactory daoFactory = new TestDAOFactory(sessionFactory)
         module = new RecipeModule(daoFactory)
 
@@ -29,18 +31,47 @@ class RecipeModuleSpec extends DatabaseSpecification {
 
     void 'create a recipe from a create request'() {
         given:
-        RecipeCreateRequest createRequest = new RecipeCreateRequest(
+        RecipeCreateUpdateRequest request = new RecipeCreateUpdateRequest(
                 title: 'meatstraganza',
                 description: 'meaty goodness',
                 createdBy: 'ast'
         )
 
         when:
-        RecipeEntity recipeEntity = module.createFromRequest(createRequest)
+        RecipeEntity recipeEntity = module.createOrUpdateFromRequest(request)
 
         then:
         recipeEntity
         recipeEntity.uuId
-        recipeEntity.lastUpdatedBy == createRequest.createdBy
+        recipeEntity.title         == request.title
+        recipeEntity.description   == request.description
+        recipeEntity.createdBy     == request.createdBy
+        recipeEntity.lastUpdatedBy == request.createdBy
     }
+
+    void 'update existing recipe from a request'() {
+        given: 'an existing recipe'
+        RecipeEntity existingRecipe = new RecipeEntity(title: 'not enough meat', createdBy: 'tsa')
+        entityBuilder.save(existingRecipe)
+
+        and: 'a update request'
+        RecipeCreateUpdateRequest request = new RecipeCreateUpdateRequest(
+                uuId:        existingRecipe.uuId,
+                title:       'meatstraganza',
+                description: 'meaty goodness',
+                createdBy:   'ast'
+        )
+
+        when:
+        RecipeEntity recipeEntity = module.createOrUpdateFromRequest(request)
+
+        then: 'the recipe has been updated'
+        recipeEntity
+        recipeEntity.uuId          == existingRecipe.uuId
+        recipeEntity.title         == request.title
+        recipeEntity.description   == request.description
+        recipeEntity.createdBy     == existingRecipe.createdBy
+        recipeEntity.lastUpdatedBy == request.createdBy
+    }
+
 }

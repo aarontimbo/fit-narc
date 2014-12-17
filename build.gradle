@@ -4,8 +4,6 @@
 allprojects {
     apply plugin: 'groovy'
     group = 'com.atimbo.fit-narc'
-    version = '0.1'
-
 }
 
 subprojects {

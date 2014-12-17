@@ -1,0 +1,7 @@
+/**
+ * build script for fit-narc-api project
+ */
+dependencies {
+    compile 'com.fasterxml.jackson.core:jackson-annotations:2.4.3'
+    compile 'javax.validation:validation-api:1.0.0.GA'
+}

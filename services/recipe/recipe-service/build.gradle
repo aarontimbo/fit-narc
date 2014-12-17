@@ -1,0 +1,93 @@
+/**
+ * build script for recipe-service project
+ */
+import org.gradle.api.plugins.shadow.ShadowPlugin
+import org.gradle.api.plugins.shadow.transformers.ServiceFileTransformer
+
+apply plugin: 'application'
+apply plugin: ShadowPlugin
+
+version = "${currentVersion}"
+
+task version {
+    println "Current Version: ${currentVersion}"
+}
+
+// The main class of the application
+mainClassName = 'com.atimbo.recipe.recipe.RecipeService'
+
+buildscript {
+    repositories {
+        mavenLocal()
+        mavenCentral()
+        maven {
+            url 'http://repo.jfrog.org/artifactory/gradle-plugins'
+        }
+        ivy {
+            url "http://dl.bintray.com/content/johnrengelman/gradle-plugins"
+            layout "maven"
+        }
+    }
+    dependencies {
+        classpath 'org.jfrog.buildinfo:build-info-extractor-gradle:2.0.16'
+        classpath 'com.github.jengelman.gradle.plugins:shadow:1.0.2'
+        classpath 'org.gradle.plugins:shadow:0.7.4'
+    }
+}
+
+dependencies {
+    compile project(':libs:fit-narc-core:fit-narc-service')
+    compile project(':services:recipe:recipe-entities')
+    compile 'mysql:mysql-connector-java:5.1.25'
+
+    // Test dependencies
+
+    testCompile project (':services:recipe:recipe-test')
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'com.atimbo.recipe.RecipeService'
+        attributes 'Built-Date': new Date() //now
+        attributes 'Built-By': System.getProperty('user.name')
+        attributes 'Build-Jdk': System.getProperty('java.version')
+        attributes 'Implementation-Title': project.name
+        attributes 'Implementation-Version': project.version
+        attributes 'Implementation-Vendor-Id': project.group
+    }
+}
+
+shadow {
+    exclude 'META-INF/*.DSA'
+    exclude 'META-INF/*.RSA'
+    transformer ServiceFileTransformer
+}
+
+task runApp(dependsOn: 'shadow', group: 'dropwizard',  description: "Run service using dev configuration") << {
+    // Grab any dw. properties that are specified on the command line and pass to the Java process (i.e. dw.http.port=8080)
+    def props = project.ext.properties.findAll { it.key.startsWith('dw') }
+    javaexec {
+        main = '-jar'
+        args = ["${shadow.shadowJar.getPath()}", 'server', 'src/main/resources/local_config.yml']
+        systemProperties = props
+    }
+}
+
+task migrate(dependsOn: 'shadow', group: 'dropwizard', description: "Run migrations using the dev configuration") << {
+    javaexec {
+        main = '-jar'
+        args = ["${shadow.shadowJar.getPath()}", 'db', 'migrate', 'src/main/resources/local_config.yml']
+    }
+}
+
+task dropAll(dependsOn: 'shadow', group: 'dropwizard',  description: "Run drop-all database command") << {
+    javaexec {
+        main = '-jar'
+        args = ["${shadow.shadowJar.getPath()}",
+                'db',
+                'drop-all',
+                'src/main/resources/local_config.yml', '--confirm-delete-everything'
+        ]
+    }
+}
+

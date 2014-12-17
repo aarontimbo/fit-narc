@@ -1,12 +1,13 @@
 package com.atimbo.recipe.domain
 
+import com.atimbo.common.utils.UniqueIDGenerator
 import org.joda.time.LocalDate
 
 import javax.persistence.*
 
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-abstract class AbstractRecipeItemEntity {
+abstract class AbstractRecipeItemEntity implements Comparable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE)
@@ -15,6 +16,10 @@ abstract class AbstractRecipeItemEntity {
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = 'recipe_id', nullable = false)
     RecipeEntity recipe
+
+
+    @Column(name = 'uu_id', nullable = false)
+    String uuId = UniqueIDGenerator.generateUUId()
 
     /**
      * Sort order of recipe item types
@@ -33,5 +38,9 @@ abstract class AbstractRecipeItemEntity {
 
     @Column(name = 'last_updated', nullable = false)
     LocalDate lastUpdated = new LocalDate()
+
+    public int compareTo(Object anotherItem) {
+        this.sortOrder <=> anotherItem.sortOrder
+    }
 
 }

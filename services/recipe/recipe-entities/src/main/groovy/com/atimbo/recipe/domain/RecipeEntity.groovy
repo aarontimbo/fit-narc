@@ -1,5 +1,6 @@
 package com.atimbo.recipe.domain
 
+import com.atimbo.common.utils.UniqueIDGenerator
 import groovy.transform.EqualsAndHashCode
 import org.joda.time.LocalDate
 
@@ -15,7 +16,7 @@ class RecipeEntity {
     Long id
 
     @Column(name = 'uu_id', nullable = false)
-    String uuId
+    String uuId = UniqueIDGenerator.generateUUId()
 
     @Column(name = 'title', nullable = false)
     String title

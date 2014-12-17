@@ -42,7 +42,7 @@ class RecipeDAOSpec extends DAOSpecification<RecipeDAO> {
         given: 'a new recipe'
 
         when: 'creating the recipe'
-        RecipeEntity expectedRecipe = dao.create(recipeEntity)
+        RecipeEntity expectedRecipe = dao.createOrUpdate(recipeEntity)
 
         then: 'the recipe exists'
         expectedRecipe
