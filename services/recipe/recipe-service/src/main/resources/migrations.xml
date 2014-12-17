@@ -43,17 +43,13 @@
 
         <addUniqueConstraint columnNames="uu_id"
                              constraintName="uu_id_constraint"
-                             deferrable="true"
                              disabled="true"
-                             initiallyDeferred="true"
                              schemaName="fitness"
                              tableName="recipe" />
 
         <addUniqueConstraint columnNames="title"
                              constraintName="title_constraint"
-                             deferrable="true"
                              disabled="true"
-                             initiallyDeferred="true"
                              schemaName="fitness"
                              tableName="recipe" />
 
@@ -80,6 +76,201 @@
         <rollback>
             <dropTable tableName="recipe"/>
         </rollback>
+    </changeSet>
+
+    <changeSet author="ast" id="create_recipe_item_tables">
+
+        <!-- create Direction table -->
+        <createTable tableName="direction" schemaName="fitness">
+            <column name="id" type="INT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="recipe_id" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="uu_id" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="sort_order" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_by" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_updated_by" type="VARCHAR(50)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="date_created" type="DATETIME">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_updated" type="DATETIME">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addAutoIncrement columnDataType="int"
+                          columnName="id"
+                          incrementBy="1"
+                          schemaName="fitness"
+                          startWith="1"
+                          tableName="direction"/>
+
+        <addUniqueConstraint columnNames="uu_id"
+                             constraintName="uu_id_constraint"
+                             disabled="true"
+                             schemaName="fitness"
+                             tableName="direction" />
+
+        <addForeignKeyConstraint baseColumnNames="recipe_id"
+                                 baseTableName="direction"
+                                 constraintName="fk_direction_recipe"
+                                 onDelete="CASCADE"
+                                 onUpdate="RESTRICT"
+                                 referencedColumnNames="id"
+                                 referencedTableName="recipe"/>
+
+
+        <!-- create Ingredient table -->
+        <createTable tableName="ingredient" schemaName="fitness">
+            <column name="id" type="INT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="recipe_id" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="uu_id" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="food_id" type="BIGINT">
+                <constraints nullable="true"/>
+            </column>
+            <column name="food_sequence" type="BIGINT">
+                <constraints nullable="true"/>
+            </column>
+            <column name="amount" type="FLOAT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="VARCHAR(50)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="created_by" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_updated_by" type="VARCHAR(50)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="date_created" type="DATETIME">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_updated" type="DATETIME">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addAutoIncrement columnDataType="int"
+                          columnName="id"
+                          incrementBy="1"
+                          schemaName="fitness"
+                          startWith="1"
+                          tableName="ingredient"/>
+
+        <addUniqueConstraint columnNames="uu_id"
+                             constraintName="uu_id_constraint"
+                             disabled="true"
+                             schemaName="fitness"
+                             tableName="ingredient" />
+
+        <addForeignKeyConstraint baseColumnNames="recipe_id"
+                                 baseTableName="ingredient"
+                                 constraintName="fk_ingredient_recipe"
+                                 onDelete="CASCADE"
+                                 onUpdate="RESTRICT"
+                                 referencedColumnNames="id"
+                                 referencedTableName="recipe"/>
+
+        <!-- create RecipeSource table -->
+        <createTable tableName="recipe_source" schemaName="fitness">
+            <column name="id" type="INT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="recipe_id" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="uu_id" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="sort_order" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="author" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="title" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="source_url" type="VARCHAR(150)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="created_by" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_updated_by" type="VARCHAR(50)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="date_created" type="DATETIME">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_updated" type="DATETIME">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addAutoIncrement columnDataType="int"
+                          columnName="id"
+                          incrementBy="1"
+                          schemaName="fitness"
+                          startWith="1"
+                          tableName="recipe_source"/>
+
+        <addUniqueConstraint columnNames="uu_id"
+                             constraintName="uu_id_constraint"
+                             disabled="true"
+                             schemaName="fitness"
+                             tableName="recipe_source" />
+
+        <addForeignKeyConstraint baseColumnNames="recipe_id"
+                                 baseTableName="recipe_source"
+                                 constraintName="fk_source_recipe"
+                                 onDelete="CASCADE"
+                                 onUpdate="RESTRICT"
+                                 referencedColumnNames="id"
+                                 referencedTableName="recipe"/>
+
+        <rollback>
+            <dropTable tableName="direction"/>
+            <dropTable tableName="ingredient"/>
+            <dropTable tableName="recipe_source"/>
+        </rollback>
+
+    </changeSet>
+
+    <changeSet id="add-sort_order-to-ingredient" author="ast">
+        <addColumn tableName="ingredient">
+            <column name="sort_order" type="INT">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="add-source_type-to-recipe_source" author="ast">
+        <addColumn tableName="recipe_source">
+            <column name="source_type" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
     </changeSet>
 
 </databaseChangeLog>

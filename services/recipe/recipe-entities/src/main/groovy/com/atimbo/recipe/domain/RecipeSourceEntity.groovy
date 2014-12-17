@@ -13,16 +13,16 @@ import javax.persistence.Table
 @EqualsAndHashCode()
 class RecipeSourceEntity extends AbstractRecipeItemEntity {
 
-    @Column(name = 'author', nullable = false)
+    @Column(name = 'author', nullable = false, length = 50)
     String author
 
-    @Column(name = 'title', nullable = false)
+    @Column(name = 'title', nullable = false, length = 50)
     String title
 
-    @Column(name = 'source_url', nullable = true)
+    @Column(name = 'source_url', nullable = true, length = 150)
     String sourceUrl
 
     @Column(name = 'source_type', nullable = false)
-    RecipeSourceType sourceType= RecipeSourceType.UNKNOWN
+    RecipeSourceType sourceType = RecipeSourceType.UNKNOWN
 
 }
