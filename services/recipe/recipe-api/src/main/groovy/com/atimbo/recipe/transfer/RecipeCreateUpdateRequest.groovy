@@ -20,7 +20,6 @@ class RecipeCreateUpdateRequest {
     /** Long description of the recipe */
     String description
 
-    @NotNull
     String createdBy
     String updatedBy
 }

@@ -1,7 +1,7 @@
 package com.atimbo.recipe.domain
 
 import com.atimbo.common.utils.UniqueIDGenerator
-import org.joda.time.LocalDate
+import org.joda.time.LocalDateTime
 
 import javax.persistence.*
 
@@ -34,10 +34,10 @@ abstract class AbstractRecipeItemEntity implements Comparable {
     String lastUpdatedBy
 
     @Column(name = 'date_created', nullable = false)
-    LocalDate dateCreated = new LocalDate()
+    LocalDateTime dateCreated = new LocalDateTime()
 
     @Column(name = 'last_updated', nullable = false)
-    LocalDate lastUpdated = new LocalDate()
+    LocalDateTime lastUpdated = new LocalDateTime()
 
     public int compareTo(Object anotherItem) {
         this.sortOrder <=> anotherItem.sortOrder

@@ -1,9 +1,9 @@
 package com.atimbo.recipe.transfer
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder
-import javax.validation.constraints.NotNull
+import org.joda.time.LocalDateTime
 
-import org.joda.time.LocalDate
+import javax.validation.constraints.NotNull
 
 /**
  * Transfer object representing a RecipeEntity.
@@ -25,12 +25,13 @@ class Recipe extends ATimboId {
     @NotNull
     String createdBy
 
+    @NotNull
     String lastUpdatedBy
 
     @NotNull
-    LocalDate dateCreated = new LocalDate()
+    LocalDateTime dateCreated
 
     @NotNull
-    LocalDate lastUpdated = new LocalDate()
+    LocalDateTime lastUpdated
 
 }

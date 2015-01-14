@@ -45,7 +45,7 @@ class RecipeSourceDAOSpec extends DAOSpecification<RecipeSourceDAO> {
 
     void 'creating a new recipe source for an existing recipe succeeds'() {
         given: 'a recipe'
-        builder.daoFor(RecipeEntity, RecipeDAO).create(recipeEntity)
+        builder.daoFor(RecipeEntity, RecipeDAO).createOrUpdate(recipeEntity)
         recipeSource.recipe = recipeEntity
 
         when: 'creating the recipe source'

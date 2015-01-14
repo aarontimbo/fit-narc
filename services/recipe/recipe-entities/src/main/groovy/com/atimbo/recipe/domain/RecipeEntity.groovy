@@ -2,7 +2,7 @@ package com.atimbo.recipe.domain
 
 import com.atimbo.common.utils.UniqueIDGenerator
 import groovy.transform.EqualsAndHashCode
-import org.joda.time.LocalDate
+import org.joda.time.LocalDateTime
 
 import javax.persistence.*
 
@@ -12,7 +12,7 @@ import javax.persistence.*
 class RecipeEntity {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id
 
     @Column(name = 'uu_id', nullable = false)
@@ -34,9 +34,9 @@ class RecipeEntity {
     String lastUpdatedBy
 
     @Column(name = 'date_created', nullable = false)
-    LocalDate dateCreated = new LocalDate()
+    LocalDateTime dateCreated = new LocalDateTime()
 
     @Column(name = 'last_updated', nullable = false)
-    LocalDate lastUpdated = new LocalDate()
+    LocalDateTime lastUpdated = new LocalDateTime()
 
 }

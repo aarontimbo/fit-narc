@@ -35,16 +35,18 @@ class RecipeModule {
 
     RecipeEntity createOrUpdateFromRequest(RecipeCreateUpdateRequest request) {
         RecipeEntity recipeEntity
+        boolean isNew = true
         if (request.uuId) {
             recipeEntity = recipeDAO.findByUUId(request.uuId)
             if (!recipeEntity) {
                 throw new EntityNotFoundException("Unable to find recipe ${request.uuId}")
             }
+            isNew = false
         } else {
             recipeEntity = new RecipeEntity()
         }
 
-        recipeEntity = recipeBuilder.build(recipeEntity, request)
+        recipeEntity = recipeBuilder.build(recipeEntity, request, isNew)
         return recipeDAO.persist(recipeEntity)
     }
 }
