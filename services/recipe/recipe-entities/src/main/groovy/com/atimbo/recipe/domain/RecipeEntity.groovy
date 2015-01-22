@@ -8,7 +8,7 @@ import javax.persistence.*
 
 @Entity
 @Table(name = 'recipe')
-@EqualsAndHashCode(excludes = ['items'])
+@EqualsAndHashCode(excludes = ['recipeSource','items'])
 class RecipeEntity {
 
     @Id
@@ -23,6 +23,9 @@ class RecipeEntity {
 
     @Column(name = 'description', nullable = true)
     String description
+
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = 'recipe')
+    RecipeSourceEntity recipeSource
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = 'recipe')
     Set<AbstractRecipeItemEntity> items = []

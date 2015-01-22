@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service
 @Service
 class RecipeBuilder {
 
-    RecipeEntity build(RecipeEntity recipeEntity, RecipeCreateUpdateRequest request, boolean isNew) {
+    public void build(RecipeEntity recipeEntity, RecipeCreateUpdateRequest request, boolean isNew) {
         recipeEntity.with{
             title         = request.title
             description   = request.description
@@ -21,7 +21,6 @@ class RecipeBuilder {
         if (!isNew) {
             recipeEntity.lastUpdated = new LocalDateTime()
         }
-        return recipeEntity
     }
 
 }

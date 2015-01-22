@@ -4,6 +4,7 @@ import com.atimbo.recipe.dao.DAOFactory
 import com.atimbo.recipe.dao.TestDAOFactory
 import com.atimbo.recipe.domain.RecipeEntity
 import com.atimbo.recipe.modules.RecipeModule
+import com.atimbo.recipe.modules.RecipeSourceModule
 import com.atimbo.recipe.modules.builders.RecipeBuilder
 import com.atimbo.recipe.transfer.Recipe
 import com.atimbo.recipe.transfer.RecipeCreateUpdateRequest
@@ -19,6 +20,7 @@ class RecipeResourceSpec extends DatabaseSpecification {
     RecipeBuilder recipeBuilder
     RecipeModule recipeModule
     RecipeResource recipeResource
+    RecipeSourceModule recipeSourceModule
 
     @Override
     def setup() {
@@ -28,6 +30,10 @@ class RecipeResourceSpec extends DatabaseSpecification {
         recipeBuilder = new RecipeBuilder()
         recipeModule = new RecipeModule(daoFactory)
         recipeModule.recipeBuilder = recipeBuilder
+
+        recipeSourceModule = Mock()
+        recipeModule.recipeSourceModule = recipeSourceModule
+
         recipeResource = new RecipeResource(recipeModule, objectMapper)
     }
 

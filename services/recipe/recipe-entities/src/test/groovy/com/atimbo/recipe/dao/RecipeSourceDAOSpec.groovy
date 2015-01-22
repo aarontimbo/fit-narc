@@ -43,13 +43,26 @@ class RecipeSourceDAOSpec extends DAOSpecification<RecipeSourceDAO> {
         Exception e = thrown(NotFoundException)
     }
 
+    void 'find existing recipe source by unique identifier'(){
+        given: 'a recipe source for a recipe'
+        builder.daoFor(RecipeEntity, RecipeDAO).createOrUpdate(recipeEntity)
+        recipeSource.recipe = recipeEntity
+        RecipeSourceEntity expectedEntity = dao.createOrUpdate(recipeSource)
+
+        when: 'getting a recipe source by unique identifier'
+        RecipeSourceEntity recipeSourceEntity = dao.findByUuId(recipeSource.uuId)
+
+        then: 'the recipe source is returned'
+        recipeSourceEntity == expectedEntity
+    }
+
     void 'creating a new recipe source for an existing recipe succeeds'() {
         given: 'a recipe'
         builder.daoFor(RecipeEntity, RecipeDAO).createOrUpdate(recipeEntity)
         recipeSource.recipe = recipeEntity
 
         when: 'creating the recipe source'
-        RecipeSourceEntity expectedEntity = dao.create(recipeSource)
+        RecipeSourceEntity expectedEntity = dao.createOrUpdate(recipeSource)
 
         then: 'the recipe source exists'
         expectedEntity

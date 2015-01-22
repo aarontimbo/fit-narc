@@ -4,4 +4,6 @@ interface DAOFactory {
 
     RecipeDAO getRecipeDAO()
 
+    RecipeSourceDAO getRecipeSourceDAO()
+
 }

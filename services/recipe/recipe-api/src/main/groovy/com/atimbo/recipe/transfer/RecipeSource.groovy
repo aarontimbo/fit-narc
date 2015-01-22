@@ -5,9 +5,7 @@ import com.atimbo.common.RecipeSourceType
 import javax.validation.constraints.NotNull
 
 /**
- * Created with IntelliJ IDEA.
- * User: ast
- * Date: 11/19/14
+ * Transfer object for {@link RecipeSource}
  */
 class RecipeSource extends RecipeItem {
 

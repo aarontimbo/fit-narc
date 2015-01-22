@@ -5,9 +5,7 @@ import org.joda.time.LocalDateTime
 import javax.validation.constraints.NotNull
 
 /**
- * Created with IntelliJ IDEA.
- * User: ast
- * Date: 11/19/14
+ * Base transfer object to be extended by {@link RecipeItem}s.
  */
 class RecipeItem extends ATimboId implements Comparable {
 

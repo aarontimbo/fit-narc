@@ -20,6 +20,9 @@ class RecipeCreateUpdateRequest {
     /** Long description of the recipe */
     String description
 
+    RecipeSource recipeSource
+
+    /** Provenance data **/
     String createdBy
     String updatedBy
 }

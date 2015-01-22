@@ -1,9 +1,11 @@
 package com.atimbo.recipe.dao
 
+import com.atimbo.recipe.domain.RecipeEntity
 import com.atimbo.recipe.domain.RecipeSourceEntity
 import com.sun.jersey.api.NotFoundException
 import com.yammer.dropwizard.hibernate.AbstractDAO
 import org.hibernate.SessionFactory
+import org.hibernate.criterion.Restrictions
 import org.springframework.stereotype.Repository
 
 import javax.inject.Inject
@@ -16,7 +18,7 @@ class RecipeSourceDAO extends AbstractDAO<RecipeSourceEntity> {
         super(sessionFactory)
     }
 
-    RecipeSourceEntity create(RecipeSourceEntity recipeSource) {
+    RecipeSourceEntity createOrUpdate(RecipeSourceEntity recipeSource) {
         persist(recipeSource)
     }
 
@@ -27,4 +29,9 @@ class RecipeSourceDAO extends AbstractDAO<RecipeSourceEntity> {
         }
         return recipeSource
     }
+
+    RecipeSourceEntity findByUuId(String uuId) {
+        return uniqueResult(criteria().add(Restrictions.eq('uuId', uuId)))
+    }
+
 }

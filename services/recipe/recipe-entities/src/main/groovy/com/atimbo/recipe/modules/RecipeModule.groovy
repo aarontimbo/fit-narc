@@ -3,8 +3,10 @@ package com.atimbo.recipe.modules
 import com.atimbo.recipe.dao.DAOFactory
 import com.atimbo.recipe.dao.RecipeDAO
 import com.atimbo.recipe.domain.RecipeEntity
+import com.atimbo.recipe.domain.RecipeSourceEntity
 import com.atimbo.recipe.modules.builders.RecipeBuilder
 import com.atimbo.recipe.transfer.RecipeCreateUpdateRequest
+import com.atimbo.recipe.transfer.RecipeSource
 import org.springframework.stereotype.Service
 
 import javax.annotation.Resource
@@ -20,6 +22,9 @@ class RecipeModule {
     @Resource
     RecipeBuilder recipeBuilder
 
+    @Resource
+    RecipeSourceModule recipeSourceModule
+
     @Inject
     RecipeModule(DAOFactory daoFactory) {
         this.recipeDAO = daoFactory.recipeDAO
@@ -27,9 +32,6 @@ class RecipeModule {
 
     RecipeEntity findByUUId(String uuId) {
         RecipeEntity recipeEntity = recipeDAO.findByUUId(uuId)
-        if (!recipeEntity) {
-            throw new EntityNotFoundException("No recipe found with UUID: ${uuId}")
-        }
         return recipeEntity
     }
 
@@ -38,15 +40,21 @@ class RecipeModule {
         boolean isNew = true
         if (request.uuId) {
             recipeEntity = recipeDAO.findByUUId(request.uuId)
-            if (!recipeEntity) {
-                throw new EntityNotFoundException("Unable to find recipe ${request.uuId}")
-            }
             isNew = false
         } else {
             recipeEntity = new RecipeEntity()
         }
 
-        recipeEntity = recipeBuilder.build(recipeEntity, request, isNew)
-        return recipeDAO.persist(recipeEntity)
+        recipeBuilder.build(recipeEntity, request, isNew)
+        recipeDAO.persist(recipeEntity)
+
+        addRecipeSource(recipeEntity, request.recipeSource)
+
+        return recipeEntity
+    }
+
+    private void addRecipeSource(RecipeEntity recipeEntity, RecipeSource recipeSource) {
+        RecipeSourceEntity recipeSourceEntity = recipeSourceModule.createOrUpdate(recipeEntity, recipeSource)
+        recipeEntity.recipeSource = recipeSourceEntity
     }
 }
