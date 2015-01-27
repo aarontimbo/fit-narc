@@ -9,18 +9,11 @@ import javax.validation.constraints.NotNull
  */
 class RecipeItem extends ATimboId implements Comparable {
 
-    @NotNull
-    Recipe recipe
-
-    @NotNull
     Integer sortOrder
 
     String lastUpdatedBy
 
-    @NotNull
     LocalDateTime dateCreated
-
-    @NotNull
     LocalDateTime lastUpdated
 
     public int compareTo(Object anotherItem) {

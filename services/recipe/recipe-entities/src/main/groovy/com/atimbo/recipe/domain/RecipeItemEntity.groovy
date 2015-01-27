@@ -1,22 +1,24 @@
 package com.atimbo.recipe.domain
 
 import com.atimbo.common.utils.UniqueIDGenerator
+import com.fasterxml.jackson.annotation.JsonBackReference
 import org.joda.time.LocalDateTime
 
 import javax.persistence.*
 
 @Entity
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-abstract class AbstractRecipeItemEntity implements Comparable {
+@Table(name = 'recipe_item')
+@Inheritance(strategy = InheritanceType.JOINED)
+class RecipeItemEntity implements Comparable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = 'recipe_id', nullable = false)
+    @JsonBackReference
     RecipeEntity recipe
-
 
     @Column(name = 'uu_id', nullable = false)
     String uuId = UniqueIDGenerator.generateUUId()

@@ -1,6 +1,7 @@
 package com.atimbo.recipe.domain
 
 import com.atimbo.common.utils.UniqueIDGenerator
+import com.fasterxml.jackson.annotation.JsonManagedReference
 import groovy.transform.EqualsAndHashCode
 import org.joda.time.LocalDateTime
 
@@ -24,11 +25,13 @@ class RecipeEntity {
     @Column(name = 'description', nullable = true)
     String description
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = 'recipe')
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = 'recipe_source_id')
+    @JsonManagedReference
     RecipeSourceEntity recipeSource
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = 'recipe')
-    Set<AbstractRecipeItemEntity> items = []
+    Set<RecipeItemEntity> items = []
 
     @Column(name = 'created_by', nullable = false, length = 50)
     String createdBy

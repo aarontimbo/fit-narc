@@ -5,6 +5,7 @@ import com.atimbo.recipe.conf.RecipeConfiguration
 import com.atimbo.recipe.domain.DirectionEntity
 import com.atimbo.recipe.domain.IngredientEntity
 import com.atimbo.recipe.domain.RecipeEntity
+import com.atimbo.recipe.domain.RecipeItemEntity
 import com.atimbo.recipe.domain.RecipeSourceEntity
 import com.fasterxml.jackson.databind.MapperFeature
 import com.fasterxml.jackson.databind.ObjectMapper
@@ -32,6 +33,7 @@ class RecipeService extends Service<RecipeConfiguration> {
             DirectionEntity,
             IngredientEntity,
             RecipeEntity,
+            RecipeItemEntity,
             RecipeSourceEntity
     ]
 

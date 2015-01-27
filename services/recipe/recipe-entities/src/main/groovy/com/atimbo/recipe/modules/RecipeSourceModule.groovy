@@ -25,13 +25,16 @@ class RecipeSourceModule {
     }
 
     RecipeSourceEntity createOrUpdate(RecipeEntity recipeEntity, RecipeSource recipeSource){
-        RecipeSourceEntity recipeSourceEntity = recipeSourceDAO.findByUuId(recipeSource.uuId)
-        boolean isNew = false
-        if (!recipeSourceEntity) {
-            isNew = true
-            recipeSourceEntity = new RecipeSourceEntity(recipe: recipeEntity, createdBy: recipeEntity.createdBy)
+        if (recipeSource) {
+            RecipeSourceEntity recipeSourceEntity = recipeSourceDAO.findByUuId(recipeSource.uuId)
+            boolean isNew = false
+            if (!recipeSourceEntity) {
+                isNew = true
+                recipeSourceEntity = new RecipeSourceEntity(recipe: recipeEntity, createdBy: recipeEntity.createdBy)
+            }
+            recipeSourceBuilder.build(recipeSourceEntity, recipeSource, isNew)
+            return recipeSourceDAO.createOrUpdate(recipeSourceEntity)
         }
-        recipeSourceBuilder.build(recipeSourceEntity, recipeSource, isNew)
-        return recipeSourceDAO.createOrUpdate(recipeSourceEntity)
+        return null
     }
 }

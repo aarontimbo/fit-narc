@@ -7,7 +7,7 @@ import javax.persistence.*
 @Entity
 @Table(name = 'direction')
 @EqualsAndHashCode()
-class DirectionEntity extends AbstractRecipeItemEntity {
+class DirectionEntity extends RecipeItemEntity {
 
     @Column(name = 'description', nullable = false)
     String description
