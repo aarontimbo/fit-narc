@@ -1,22 +1,24 @@
 package com.atimbo.recipe.domain
 
 import com.atimbo.common.utils.UniqueIDGenerator
-import org.joda.time.LocalDate
+import com.fasterxml.jackson.annotation.JsonBackReference
+import org.joda.time.LocalDateTime
 
 import javax.persistence.*
 
 @Entity
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-abstract class AbstractRecipeItemEntity implements Comparable {
+@Table(name = 'recipe_item')
+@Inheritance(strategy = InheritanceType.JOINED)
+class RecipeItemEntity implements Comparable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = 'recipe_id', nullable = false)
+    @JsonBackReference
     RecipeEntity recipe
-
 
     @Column(name = 'uu_id', nullable = false)
     String uuId = UniqueIDGenerator.generateUUId()
@@ -34,10 +36,10 @@ abstract class AbstractRecipeItemEntity implements Comparable {
     String lastUpdatedBy
 
     @Column(name = 'date_created', nullable = false)
-    LocalDate dateCreated = new LocalDate()
+    LocalDateTime dateCreated = new LocalDateTime()
 
     @Column(name = 'last_updated', nullable = false)
-    LocalDate lastUpdated = new LocalDate()
+    LocalDateTime lastUpdated = new LocalDateTime()
 
     public int compareTo(Object anotherItem) {
         this.sortOrder <=> anotherItem.sortOrder

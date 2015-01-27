@@ -1,12 +1,17 @@
 package com.atimbo.recipe.resources
 
+import com.atimbo.common.RecipeSourceType
 import com.atimbo.recipe.dao.DAOFactory
 import com.atimbo.recipe.dao.TestDAOFactory
 import com.atimbo.recipe.domain.RecipeEntity
+import com.atimbo.recipe.domain.RecipeSourceEntity
 import com.atimbo.recipe.modules.RecipeModule
+import com.atimbo.recipe.modules.RecipeSourceModule
 import com.atimbo.recipe.modules.builders.RecipeBuilder
+import com.atimbo.recipe.modules.builders.RecipeSourceBuilder
 import com.atimbo.recipe.transfer.Recipe
 import com.atimbo.recipe.transfer.RecipeCreateUpdateRequest
+import com.atimbo.recipe.transfer.RecipeSource
 import com.atimbo.recipe.util.EntityBuilder
 import com.atimbo.test.dao.DatabaseSpecification
 
@@ -19,6 +24,7 @@ class RecipeResourceSpec extends DatabaseSpecification {
     RecipeBuilder recipeBuilder
     RecipeModule recipeModule
     RecipeResource recipeResource
+    RecipeSourceModule recipeSourceModule
 
     @Override
     def setup() {
@@ -28,6 +34,11 @@ class RecipeResourceSpec extends DatabaseSpecification {
         recipeBuilder = new RecipeBuilder()
         recipeModule = new RecipeModule(daoFactory)
         recipeModule.recipeBuilder = recipeBuilder
+
+        recipeSourceModule = new RecipeSourceModule(daoFactory)
+        recipeSourceModule.recipeSourceBuilder = new RecipeSourceBuilder()
+        recipeModule.recipeSourceModule = recipeSourceModule
+
         recipeResource = new RecipeResource(recipeModule, objectMapper)
     }
 
@@ -90,6 +101,32 @@ class RecipeResourceSpec extends DatabaseSpecification {
             description   == request.description
             lastUpdatedBy == request.updatedBy
         }
+    }
+
+    void 'create recipe from request with recipe items'() {
+        given: 'a recipe create request'
+        RecipeCreateUpdateRequest request = new RecipeCreateUpdateRequest(
+                title: TITLE,
+                createdBy: CREATED_BY
+        )
+
+        and: 'a recipe source'
+        RecipeSource recipeSourceTO = new RecipeSource(
+                author: 'Me at',
+                title:  'How to Cook Meat',
+                sourceType: RecipeSourceType.COOKBOOK,
+                sortOrder: 1
+        )
+        request.recipeSource = recipeSourceTO
+
+        when: 'we get a recipe from a request'
+        Recipe recipeTO = recipeResource.getRecipe(request)
+
+        then: 'the recipe is created'
+        recipeTO
+        recipeTO.uuId
+        recipeTO.title == TITLE
+        recipeTO.recipeSource
     }
 
 }

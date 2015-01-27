@@ -5,4 +5,5 @@ dependencies {
     compile project(':libs:fit-narc-core:fit-narc-service')
 
     compile "org.spockframework:spock-core:${spockVersion}"
+    compile 'cglib:cglib-nodep:3.1'
 }

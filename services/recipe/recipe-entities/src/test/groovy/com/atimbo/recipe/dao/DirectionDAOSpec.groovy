@@ -43,7 +43,7 @@ class DirectionDAOSpec extends DAOSpecification<DirectionDAO> {
 
     void 'creating a new direction for an existing recipe succeeds'() {
         given: 'a recipe'
-        builder.daoFor(RecipeEntity, RecipeDAO).create(recipeEntity)
+        builder.daoFor(RecipeEntity, RecipeDAO).createOrUpdate(recipeEntity)
         direction.recipe = recipeEntity
 
         when: 'creating the direction'

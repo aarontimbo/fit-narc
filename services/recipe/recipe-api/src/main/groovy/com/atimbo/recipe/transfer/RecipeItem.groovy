@@ -1,29 +1,20 @@
 package com.atimbo.recipe.transfer
 
-import org.joda.time.LocalDate
+import org.joda.time.LocalDateTime
 
 import javax.validation.constraints.NotNull
 
 /**
- * Created with IntelliJ IDEA.
- * User: ast
- * Date: 11/19/14
+ * Base transfer object to be extended by {@link RecipeItem}s.
  */
 class RecipeItem extends ATimboId implements Comparable {
 
-    @NotNull
-    Recipe recipe
-
-    @NotNull
     Integer sortOrder
 
     String lastUpdatedBy
 
-    @NotNull
-    LocalDate dateCreated
-
-    @NotNull
-    LocalDate lastUpdated
+    LocalDateTime dateCreated
+    LocalDateTime lastUpdated
 
     public int compareTo(Object anotherItem) {
         this.sortOrder <=> anotherItem.sortOrder

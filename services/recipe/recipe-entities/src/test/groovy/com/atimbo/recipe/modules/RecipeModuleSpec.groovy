@@ -13,12 +13,15 @@ class RecipeModuleSpec extends DatabaseSpecification {
     EntityBuilder entityBuilder
     RecipeBuilder recipeBuilder
     RecipeModule module
+    RecipeSourceModule recipeSourceModule
 
     @Override
     def setup() {
         entityBuilder = new EntityBuilder(sessionFactory)
         DAOFactory daoFactory = new TestDAOFactory(sessionFactory)
         module = new RecipeModule(daoFactory)
+        recipeSourceModule = Mock()
+        module.recipeSourceModule = recipeSourceModule
 
         recipeBuilder = new RecipeBuilder()
         module.recipeBuilder = recipeBuilder

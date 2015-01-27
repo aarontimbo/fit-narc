@@ -13,4 +13,9 @@ class TestDAOFactory implements DAOFactory {
     RecipeDAO getRecipeDAO() {
         return new RecipeDAO(sessionFactory)
     }
+
+    RecipeSourceDAO getRecipeSourceDAO() {
+        return new RecipeSourceDAO(sessionFactory)
+    }
+
 }

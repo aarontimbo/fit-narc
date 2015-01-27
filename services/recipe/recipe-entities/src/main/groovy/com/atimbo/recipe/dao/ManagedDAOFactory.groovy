@@ -9,5 +9,7 @@ class ManagedDAOFactory implements DAOFactory {
     @Inject
     RecipeDAO recipeDAO
 
+    @Inject
+    RecipeSourceDAO recipeSourceDAO
 
 }

@@ -40,6 +40,8 @@ class RecipeResource extends AbstractResource {
     /**
      * Find a recipe by a universally unique identifier.
      *
+     * Returns a status of '200 OK' if successful.
+     *
      * @param       uuId
      * @return      Recipe transfer object
      */
@@ -54,6 +56,8 @@ class RecipeResource extends AbstractResource {
 
     /**
      * Create or update a recipe.
+     *
+     * Returns a status of '200 OK' if successful.
      *
      * @param       request the Recipe create or update request
      * @return      Recipe transfer object

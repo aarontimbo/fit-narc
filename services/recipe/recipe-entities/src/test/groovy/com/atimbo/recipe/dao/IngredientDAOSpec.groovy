@@ -43,7 +43,7 @@ class IngredientDAOSpec extends DAOSpecification<IngredientDAO> {
 
     void 'creating a new ingredient for an existing recipe succeeds'() {
         given: 'a recipe'
-        builder.daoFor(RecipeEntity, RecipeDAO).create(recipeEntity)
+        builder.daoFor(RecipeEntity, RecipeDAO).createOrUpdate(recipeEntity)
         ingredient.recipe = recipeEntity
 
         when: 'creating the ingredient'
