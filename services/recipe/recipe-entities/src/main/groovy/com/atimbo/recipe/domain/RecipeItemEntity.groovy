@@ -45,4 +45,10 @@ class RecipeItemEntity implements Comparable {
         this.sortOrder <=> anotherItem.sortOrder
     }
 
+    @Transient
+    boolean getRecipeSource() { false }
+
+    @Transient
+    boolean getIngredient() { false }
+
 }

@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue
 import javax.persistence.GenerationType
 import javax.persistence.Id
 import javax.persistence.Table
+import javax.persistence.Transient
 
 @Entity
 @Table(name = 'recipe_source')
@@ -27,5 +28,8 @@ class RecipeSourceEntity extends RecipeItemEntity {
 
     @Column(name = 'source_type', nullable = false)
     RecipeSourceType sourceType = RecipeSourceType.UNKNOWN
+
+    @Transient
+    boolean getRecipeSource() { true }
 
 }

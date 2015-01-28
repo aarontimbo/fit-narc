@@ -59,4 +59,23 @@ class IngredientDAOSpec extends DAOSpecification<IngredientDAO> {
         ingredientEntity == expectedEntity
         ingredientEntity.recipe == recipeEntity
     }
+
+    void 'find existing ingredient by uuid'() {
+        given: 'a recipe'
+        builder.daoFor(RecipeEntity, RecipeDAO).createOrUpdate(recipeEntity)
+        ingredient.recipe = recipeEntity
+
+        when: 'creating the ingredient'
+        IngredientEntity expectedEntity = dao.create(ingredient)
+
+        then: 'the ingredient exists'
+        expectedEntity
+
+        when: 'getting the ingredient by uuid'
+        IngredientEntity ingredientEntity = dao.findByUuId(expectedEntity.uuId)
+
+        then: 'the ingredient is found'
+        ingredientEntity == expectedEntity
+        ingredientEntity.recipe == recipeEntity
+    }
 }

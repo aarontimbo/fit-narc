@@ -4,6 +4,7 @@ import com.atimbo.recipe.domain.IngredientEntity
 import com.sun.jersey.api.NotFoundException
 import com.yammer.dropwizard.hibernate.AbstractDAO
 import org.hibernate.SessionFactory
+import org.hibernate.criterion.Restrictions
 import org.springframework.stereotype.Repository
 
 import javax.inject.Inject
@@ -26,5 +27,9 @@ class IngredientDAO extends AbstractDAO<IngredientEntity> {
             throw new NotFoundException("no ingredient found with id: ${id}")
         }
         return ingredient
+    }
+
+    IngredientEntity findByUuId(String uuId) {
+        return uniqueResult(criteria().add(Restrictions.eq('uuId', uuId)))
     }
 }

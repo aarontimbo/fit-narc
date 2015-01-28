@@ -33,4 +33,7 @@ class IngredientEntity extends RecipeItemEntity {
     @Column(name = 'description', nullable = true, length = 50)
     String description
 
+    @Transient
+    boolean getIngredient() { true }
+
 }

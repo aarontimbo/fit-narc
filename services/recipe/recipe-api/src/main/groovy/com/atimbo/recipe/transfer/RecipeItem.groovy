@@ -1,5 +1,6 @@
 package com.atimbo.recipe.transfer
 
+import com.atimbo.common.RecipeItemType
 import org.joda.time.LocalDateTime
 
 import javax.validation.constraints.NotNull
@@ -13,11 +14,15 @@ class RecipeItem extends ATimboId implements Comparable {
 
     String lastUpdatedBy
 
+    RecipeItemType type
+
     LocalDateTime dateCreated
     LocalDateTime lastUpdated
 
-    public int compareTo(Object anotherItem) {
+    int compareTo(Object anotherItem) {
         this.sortOrder <=> anotherItem.sortOrder
     }
+
+    boolean getIngredient() { false }
 
 }

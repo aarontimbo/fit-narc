@@ -7,6 +7,12 @@ import org.springframework.stereotype.Component
 class ManagedDAOFactory implements DAOFactory {
 
     @Inject
+    DirectionDAO directionDAO
+
+    @Inject
+    IngredientDAO ingredientDAO
+
+    @Inject
     RecipeDAO recipeDAO
 
     @Inject
