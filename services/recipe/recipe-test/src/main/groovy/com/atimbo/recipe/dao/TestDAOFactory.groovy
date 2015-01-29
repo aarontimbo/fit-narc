@@ -10,6 +10,14 @@ class TestDAOFactory implements DAOFactory {
         this.sessionFactory = sessionFactory
     }
 
+    IngredientDAO getIngredientDAO() {
+        return new IngredientDAO(sessionFactory)
+    }
+
+    DirectionDAO getDirectionDAO() {
+        return new DirectionDAO(sessionFactory)
+    }
+
     RecipeDAO getRecipeDAO() {
         return new RecipeDAO(sessionFactory)
     }
