@@ -6,6 +6,7 @@ import com.atimbo.recipe.dao.IngredientDAO
 import com.atimbo.recipe.domain.RecipeEntity
 import com.atimbo.recipe.domain.RecipeItemEntity
 import com.atimbo.recipe.modules.builders.RecipeItemBuilder
+import com.atimbo.recipe.modules.builders.RecipeSourceBuilder
 import com.atimbo.recipe.transfer.RecipeItem
 import org.springframework.stereotype.Service
 
@@ -18,30 +19,26 @@ import javax.inject.Inject
 @Service
 class RecipeItemModule {
 
-    final DirectionDAO directionDAO
-    final IngredientDAO ingredientDAO
-
-    @Resource
-    RecipeItemBuilder builder
+    List<RecipeItemBuilder> builders
 
     @Inject
     RecipeItemModule(DAOFactory daoFactory) {
-        this.directionDAO = daoFactory
-        this.ingredientDAO = ingredientDAO
+        init(daoFactory)
     }
 
     RecipeItemEntity createOrUpdateRecipeItem(RecipeEntity recipeEntity, RecipeItem recipeItem) {
-        if (recipeItem) {
-            RecipeItemEntity recipeItemEntity = ingredientDAO.findByUuId(recipeItem.uuId)
-            boolean isNew = false
-            if (!recipeItemEntity) {
-                isNew = true
-                recipeItemEntity = new RecipeItemEntity(recipe: recipeEntity, createdBy: recipeEntity.createdBy)
-            }
-            builder.build()
+        if (!recipeItem) { return null }
 
-            return recipeItemEntity
+        RecipeItemEntity itemEntity
+        builders.each { RecipeItemBuilder builder ->
+            if (builder.canBuild(itemEntity)) {
+                return builder.build(recipeEntity, recipeItem)
+            }
         }
-        return null
     }
+
+    private void init(DAOFactory daoFactory) {
+        builders << new RecipeSourceBuilder(daoFactory)
+    }
+
 }
