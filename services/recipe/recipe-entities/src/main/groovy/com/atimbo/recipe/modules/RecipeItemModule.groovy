@@ -19,7 +19,7 @@ import javax.inject.Inject
 @Service
 class RecipeItemModule {
 
-    List<RecipeItemBuilder> builders
+    List<RecipeItemBuilder> builders = []
 
     @Inject
     RecipeItemModule(DAOFactory daoFactory) {
