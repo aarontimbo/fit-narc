@@ -24,7 +24,7 @@ class RecipeCreateUpdateRequest {
 
     List<Ingredient> ingredients
 
-    List<Ingredient> directions
+    List<Direction> directions
 
     /** Provenance data **/
     String createdBy
