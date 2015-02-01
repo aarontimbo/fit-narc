@@ -5,6 +5,7 @@ import com.atimbo.recipe.dao.DirectionDAO
 import com.atimbo.recipe.dao.IngredientDAO
 import com.atimbo.recipe.domain.RecipeEntity
 import com.atimbo.recipe.domain.RecipeItemEntity
+import com.atimbo.recipe.modules.builders.IngredientBuilder
 import com.atimbo.recipe.modules.builders.RecipeItemBuilder
 import com.atimbo.recipe.modules.builders.RecipeSourceBuilder
 import com.atimbo.recipe.transfer.RecipeItem
@@ -31,14 +32,16 @@ class RecipeItemModule {
 
         RecipeItemEntity itemEntity
         builders.each { RecipeItemBuilder builder ->
-            if (builder.canBuild(itemEntity)) {
-                return builder.build(recipeEntity, recipeItem)
+            if (builder.canBuild(recipeItem)) {
+                itemEntity = builder.build(recipeEntity, recipeItem)
             }
         }
+        return itemEntity
     }
 
     private void init(DAOFactory daoFactory) {
         builders << new RecipeSourceBuilder(daoFactory)
+        builders << new IngredientBuilder(daoFactory)
     }
 
 }

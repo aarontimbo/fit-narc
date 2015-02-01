@@ -6,6 +6,7 @@ import com.atimbo.recipe.dao.RecipeSourceDAO
 import com.atimbo.recipe.domain.RecipeEntity
 import com.atimbo.recipe.domain.RecipeSourceEntity
 import com.atimbo.recipe.transfer.RecipeItem
+import com.atimbo.recipe.transfer.RecipeSource
 import org.springframework.stereotype.Service
 
 import javax.inject.Inject
@@ -14,7 +15,7 @@ import javax.inject.Inject
  * Builder to create {@link RecipeSourceEntity} from request.
  */
 @Service
-class RecipeSourceBuilder extends AbstractRecipeItemBuilder {
+class RecipeSourceBuilder extends AbstractRecipeItemBuilder implements RecipeItemBuilder {
 
     final RecipeSourceDAO recipeSourceDAO
 
@@ -27,21 +28,22 @@ class RecipeSourceBuilder extends AbstractRecipeItemBuilder {
         return item.type == RecipeItemType.RECIPE_SOURCE
     }
 
-    public RecipeSourceEntity build(RecipeEntity recipeEntity, RecipeItem item) {
+    public RecipeSourceEntity build(RecipeEntity recipeEntity, Object obj) {
+        RecipeSource recipeSource = obj as RecipeSource
 
-        RecipeSourceEntity entity = getOrCreateRecipeItem(recipeEntity, item)
+        RecipeSourceEntity entity = getOrCreateRecipeItem(recipeEntity, recipeSource)
 
-        baseBuilder(entity, item)
+        baseBuilder(entity, recipeSource)
 
         entity.with {
-            author        = item.author
-            lastUpdatedBy = item.lastUpdatedBy ?: entity.createdBy
-            sortOrder     = item.sortOrder ?: 1
-            sourceUrl     = item.sourceUrl
-            title         = item.title
-            sourceType    = item.sourceType
+            author        = recipeSource.author
+            lastUpdatedBy = recipeSource.lastUpdatedBy ?: entity.createdBy
+            sortOrder     = recipeSource.sortOrder ?: 1
+            sourceUrl     = recipeSource.sourceUrl
+            title         = recipeSource.title
+            sourceType    = recipeSource.sourceType
         }
-        return entity
+        return recipeSourceDAO.createOrUpdate(entity)
     }
 
     RecipeSourceEntity getOrCreateRecipeItem(RecipeEntity recipeEntity, RecipeItem item) {

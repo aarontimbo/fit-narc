@@ -25,13 +25,11 @@ class RecipeEntity {
     @Column(name = 'description', nullable = true)
     String description
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = 'recipe_source_id')
-    @JsonManagedReference
-    RecipeSourceEntity recipeSource
-
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = 'recipe')
-    Set<RecipeItemEntity> items = []
+    @OneToMany(cascade = CascadeType.ALL,
+               fetch = FetchType.EAGER,
+               mappedBy = 'recipe',
+               targetEntity = RecipeItemEntity)
+    Set<RecipeSourceEntity> sources = []
 
     @Column(name = 'created_by', nullable = false, length = 50)
     String createdBy

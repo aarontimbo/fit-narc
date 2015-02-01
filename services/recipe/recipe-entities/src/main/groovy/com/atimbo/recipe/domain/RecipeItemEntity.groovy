@@ -51,4 +51,7 @@ class RecipeItemEntity implements Comparable {
     @Transient
     boolean getIngredient() { false }
 
+    @Transient
+    boolean getDirection() { false }
+
 }

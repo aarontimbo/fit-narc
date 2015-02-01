@@ -7,10 +7,11 @@ import com.atimbo.recipe.transfer.RecipeItem
 /**
  * Interface for building {@link RecipeItemEntity} from {@link RecipeItem}.
  */
-public interface RecipeItemBuilder {
+public interface RecipeItemBuilder<T extends RecipeItemEntity> {
 
-    public boolean canBuild(RecipeItemEntity recipeItemEntity)
+    public boolean canBuild(RecipeItem item)
 
-    public RecipeItemEntity build(RecipeEntity recipeEntity, RecipeItem recipeItem)
+    public T build(RecipeEntity recipeEntity, Object item)
 
+    public T getOrCreateRecipeItem(RecipeEntity recipeEntity, RecipeItem item)
 }

@@ -1,5 +1,6 @@
 package com.atimbo.recipe.domain
 
+import com.fasterxml.jackson.annotation.JsonBackReference
 import groovy.transform.EqualsAndHashCode
 
 import javax.persistence.*

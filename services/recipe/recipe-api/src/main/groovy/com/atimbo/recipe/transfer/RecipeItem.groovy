@@ -23,6 +23,10 @@ class RecipeItem extends ATimboId implements Comparable {
         this.sortOrder <=> anotherItem.sortOrder
     }
 
+    boolean getRecipeSource() { false }
+
     boolean getIngredient() { false }
+
+    boolean getDirection() { false }
 
 }

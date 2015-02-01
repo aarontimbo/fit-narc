@@ -17,7 +17,7 @@ class IngredientDAO extends AbstractDAO<IngredientEntity> {
         super(sessionFactory)
     }
 
-    IngredientEntity create(IngredientEntity ingredient) {
+    IngredientEntity createOrUpdate(IngredientEntity ingredient) {
         persist(ingredient)
     }
 

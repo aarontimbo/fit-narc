@@ -5,6 +5,7 @@ import com.atimbo.recipe.dao.DAOFactory
 import com.atimbo.recipe.dao.IngredientDAO
 import com.atimbo.recipe.domain.IngredientEntity
 import com.atimbo.recipe.domain.RecipeEntity
+import com.atimbo.recipe.transfer.Ingredient
 import com.atimbo.recipe.transfer.RecipeItem
 
 import javax.inject.Inject
@@ -12,7 +13,7 @@ import javax.inject.Inject
 /**
  * Build {@link IngredientEntity} from request.
  */
-class IngredientBuilder extends AbstractRecipeItemBuilder {
+class IngredientBuilder extends AbstractRecipeItemBuilder implements RecipeItemBuilder {
 
     final IngredientDAO ingredientDAO
 
@@ -25,18 +26,20 @@ class IngredientBuilder extends AbstractRecipeItemBuilder {
         return item.type == RecipeItemType.INGREDIENT
     }
 
-    public IngredientEntity build(RecipeEntity recipeEntity, RecipeItem item) {
+    public IngredientEntity build(RecipeEntity recipeEntity, Object obj) {
+        Ingredient ingredient = obj as Ingredient
         IngredientEntity entity = getOrCreateRecipeItem(recipeEntity, item)
 
-        baseBuilder(entity, item)
-
+        baseBuilder(entity, ingredient)
         entity.with {
-            foodId       = item.foodId
-            foodSequence = item.foodSequence
-            amount       = item.amount
-            description  = item.description
+            foodId        = ingredient.foodId
+            foodSequence  = ingredient.foodSequence
+            amount        = ingredient.amount
+            description   = ingredient.description
+            lastUpdatedBy = ingredient.lastUpdatedBy ?: entity.createdBy
+            sortOrder     = ingredient.sortOrder
         }
-        return entity
+        return ingredientDAO.createOrUpdate(entity)
     }
 
     IngredientEntity getOrCreateRecipeItem(RecipeEntity recipeEntity, RecipeItem item) {
