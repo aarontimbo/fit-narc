@@ -19,7 +19,7 @@ import javax.inject.Inject
 import javax.persistence.EntityNotFoundException
 
 @Service
-class RecipeModule<T extends RecipeItem> {
+class RecipeModule {
 
     RecipeDAO recipeDAO
 
@@ -64,7 +64,7 @@ class RecipeModule<T extends RecipeItem> {
         }
     }
 
-    private RecipeItemEntity addRecipeItem(RecipeEntity recipeEntity, T item) {
+    private RecipeItemEntity addRecipeItem(RecipeEntity recipeEntity, RecipeItem item) {
         return recipeItemModule.createOrUpdateRecipeItem(recipeEntity, item)
     }
 }
