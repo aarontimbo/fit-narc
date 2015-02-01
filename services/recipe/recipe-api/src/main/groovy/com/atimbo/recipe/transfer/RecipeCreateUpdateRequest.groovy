@@ -20,9 +20,17 @@ class RecipeCreateUpdateRequest {
     /** Long description of the recipe */
     String description
 
-    RecipeSource recipeSource
+    List<RecipeSource> sources
+
+    List<Ingredient> ingredients
+
+    List<Direction> directions
 
     /** Provenance data **/
     String createdBy
     String updatedBy
+
+    List<Class<?>> getItems() {
+        return sources + ingredients + directions
+    }
 }

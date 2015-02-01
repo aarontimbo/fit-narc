@@ -18,4 +18,7 @@ class Ingredient extends RecipeItem {
     Float amount
 
     String description
+
+    @Override
+    boolean getIngredient() { true }
 }

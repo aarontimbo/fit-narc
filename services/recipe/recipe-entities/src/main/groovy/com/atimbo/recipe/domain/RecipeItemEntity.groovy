@@ -27,7 +27,7 @@ class RecipeItemEntity implements Comparable {
      * Sort order of recipe item types
      */
     @Column(name = 'sort_order', nullable = false)
-    Integer sortOrder = 1
+    Integer sortOrder
 
     @Column(name = 'created_by', nullable = false, length = 50)
     String createdBy
@@ -44,5 +44,14 @@ class RecipeItemEntity implements Comparable {
     public int compareTo(Object anotherItem) {
         this.sortOrder <=> anotherItem.sortOrder
     }
+
+    @Transient
+    boolean getRecipeSource() { false }
+
+    @Transient
+    boolean getIngredient() { false }
+
+    @Transient
+    boolean getDirection() { false }
 
 }

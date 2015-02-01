@@ -1,8 +1,11 @@
 package com.atimbo.recipe.domain
 
 import com.atimbo.common.utils.UniqueIDGenerator
+import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.JsonManagedReference
 import groovy.transform.EqualsAndHashCode
+import org.hibernate.annotations.Sort
+import org.hibernate.annotations.SortType
 import org.joda.time.LocalDateTime
 
 import javax.persistence.*
@@ -25,13 +28,12 @@ class RecipeEntity {
     @Column(name = 'description', nullable = true)
     String description
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = 'recipe_source_id')
-    @JsonManagedReference
-    RecipeSourceEntity recipeSource
-
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = 'recipe')
-    Set<RecipeItemEntity> items = []
+    @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL,
+               fetch = FetchType.EAGER,
+               mappedBy = 'recipe',
+               targetEntity = RecipeItemEntity)
+    Set<RecipeItemEntity> items
 
     @Column(name = 'created_by', nullable = false, length = 50)
     String createdBy
@@ -44,5 +46,19 @@ class RecipeEntity {
 
     @Column(name = 'last_updated', nullable = false)
     LocalDateTime lastUpdated = new LocalDateTime()
+
+    @Sort(type = SortType.NATURAL)
+    SortedSet<RecipeSourceEntity> getSources() {
+        return items.findAll{ it instanceof RecipeSourceEntity } as SortedSet
+    }
+
+    @Sort(type = SortType.NATURAL)
+    SortedSet<IngredientEntity> getIngredients() {
+        return items.findAll{ it instanceof IngredientEntity } as SortedSet
+    }
+
+    void addToItems(RecipeItemEntity itemEntity) {
+        items.add(itemEntity)
+    }
 
 }

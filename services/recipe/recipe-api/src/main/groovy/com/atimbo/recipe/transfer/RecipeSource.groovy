@@ -20,4 +20,6 @@ class RecipeSource extends RecipeItem {
     @NotNull
     RecipeSourceType sourceType
 
+    @Override
+    boolean getRecipeSource() { true }
 }

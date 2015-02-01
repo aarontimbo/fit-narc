@@ -182,5 +182,11 @@
 
     </changeSet>
 
+    <changeSet author="ast" id="remove-sort_order-default-value">
+        <dropDefaultValue columnDataType="int"
+                          columnName="sort_order"
+                          schemaName="fitness"
+                          tableName="recipe_item"/>
+    </changeSet>
 
 </databaseChangeLog>

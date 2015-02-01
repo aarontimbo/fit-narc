@@ -1,5 +1,6 @@
 package com.atimbo.recipe.domain
 
+import com.fasterxml.jackson.annotation.JsonBackReference
 import groovy.transform.EqualsAndHashCode
 
 import javax.persistence.*
@@ -32,5 +33,8 @@ class IngredientEntity extends RecipeItemEntity {
      */
     @Column(name = 'description', nullable = true, length = 50)
     String description
+
+    @Transient
+    boolean getIngredient() { true }
 
 }

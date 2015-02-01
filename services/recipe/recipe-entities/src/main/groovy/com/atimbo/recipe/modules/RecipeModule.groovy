@@ -1,11 +1,16 @@
 package com.atimbo.recipe.modules
 
+import com.atimbo.common.RecipeItemType
 import com.atimbo.recipe.dao.DAOFactory
 import com.atimbo.recipe.dao.RecipeDAO
 import com.atimbo.recipe.domain.RecipeEntity
+import com.atimbo.recipe.domain.RecipeItemEntity
 import com.atimbo.recipe.domain.RecipeSourceEntity
 import com.atimbo.recipe.modules.builders.RecipeBuilder
+import com.atimbo.recipe.transfer.Direction
+import com.atimbo.recipe.transfer.Ingredient
 import com.atimbo.recipe.transfer.RecipeCreateUpdateRequest
+import com.atimbo.recipe.transfer.RecipeItem
 import com.atimbo.recipe.transfer.RecipeSource
 import org.springframework.stereotype.Service
 
@@ -16,14 +21,13 @@ import javax.persistence.EntityNotFoundException
 @Service
 class RecipeModule {
 
-
     RecipeDAO recipeDAO
 
     @Resource
     RecipeBuilder recipeBuilder
 
     @Resource
-    RecipeSourceModule recipeSourceModule
+    RecipeItemModule recipeItemModule
 
     @Inject
     RecipeModule(DAOFactory daoFactory) {
@@ -46,15 +50,21 @@ class RecipeModule {
         }
 
         recipeBuilder.build(recipeEntity, request, isNew)
-        recipeDAO.persist(recipeEntity)
 
-        addRecipeSource(recipeEntity, request.recipeSource)
+        addRecipeItems(recipeEntity, request)
 
-        return recipeEntity
+        return recipeDAO.createOrUpdate(recipeEntity)
     }
 
-    private void addRecipeSource(RecipeEntity recipeEntity, RecipeSource recipeSource) {
-        RecipeSourceEntity recipeSourceEntity = recipeSourceModule.createOrUpdate(recipeEntity, recipeSource)
-        recipeEntity.recipeSource = recipeSourceEntity
+    //~BEGIN private methods =========================
+
+    private void addRecipeItems(RecipeEntity recipeEntity, RecipeCreateUpdateRequest request) {
+        request.items.each { RecipeItem item ->
+            recipeEntity.addToItems(addRecipeItem(recipeEntity, item))
+        }
+    }
+
+    private RecipeItemEntity addRecipeItem(RecipeEntity recipeEntity, RecipeItem item) {
+        return recipeItemModule.createOrUpdateRecipeItem(recipeEntity, item)
     }
 }
