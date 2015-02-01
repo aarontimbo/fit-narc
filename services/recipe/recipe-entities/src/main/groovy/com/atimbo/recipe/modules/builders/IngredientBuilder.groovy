@@ -28,7 +28,7 @@ class IngredientBuilder extends AbstractRecipeItemBuilder implements RecipeItemB
 
     public IngredientEntity build(RecipeEntity recipeEntity, Object obj) {
         Ingredient ingredient = obj as Ingredient
-        IngredientEntity entity = getOrCreateRecipeItem(recipeEntity, item)
+        IngredientEntity entity = getOrCreateRecipeItem(recipeEntity, ingredient)
 
         baseBuilder(entity, ingredient)
         entity.with {
@@ -37,7 +37,6 @@ class IngredientBuilder extends AbstractRecipeItemBuilder implements RecipeItemB
             amount        = ingredient.amount
             description   = ingredient.description
             lastUpdatedBy = ingredient.lastUpdatedBy ?: entity.createdBy
-            sortOrder     = ingredient.sortOrder
         }
         return ingredientDAO.createOrUpdate(entity)
     }

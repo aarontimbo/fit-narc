@@ -27,7 +27,7 @@ class RecipeItemEntity implements Comparable {
      * Sort order of recipe item types
      */
     @Column(name = 'sort_order', nullable = false)
-    Integer sortOrder = 1
+    Integer sortOrder
 
     @Column(name = 'created_by', nullable = false, length = 50)
     String createdBy

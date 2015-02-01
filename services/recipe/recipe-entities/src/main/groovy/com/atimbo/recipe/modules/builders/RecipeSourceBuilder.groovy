@@ -38,7 +38,6 @@ class RecipeSourceBuilder extends AbstractRecipeItemBuilder implements RecipeIte
         entity.with {
             author        = recipeSource.author
             lastUpdatedBy = recipeSource.lastUpdatedBy ?: entity.createdBy
-            sortOrder     = recipeSource.sortOrder ?: 1
             sourceUrl     = recipeSource.sourceUrl
             title         = recipeSource.title
             sourceType    = recipeSource.sourceType

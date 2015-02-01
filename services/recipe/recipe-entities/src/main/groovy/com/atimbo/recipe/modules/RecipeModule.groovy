@@ -59,16 +59,9 @@ class RecipeModule<T extends RecipeItem> {
     //~BEGIN private methods =========================
 
     private void addRecipeItems(RecipeEntity recipeEntity, RecipeCreateUpdateRequest request) {
-        request.sources.each { RecipeSource item ->
-            recipeEntity.sources << addRecipeItem(recipeEntity, item)
+        request.items.each { RecipeItem item ->
+            recipeEntity.addToItems(addRecipeItem(recipeEntity, item))
         }
-//        request.ingredients.each { Ingredient item ->
-//            recipeEntity.sources << addRecipeItem(recipeEntity, item)
-//        }
-//        request.directions.each { Direction item ->
-//            addRecipeItem(recipeEntity, item)
-//        }
-
     }
 
     private RecipeItemEntity addRecipeItem(RecipeEntity recipeEntity, T item) {

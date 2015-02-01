@@ -29,4 +29,8 @@ class RecipeCreateUpdateRequest {
     /** Provenance data **/
     String createdBy
     String updatedBy
+
+    List<Class<?>> getItems() {
+        return sources + ingredients + directions
+    }
 }

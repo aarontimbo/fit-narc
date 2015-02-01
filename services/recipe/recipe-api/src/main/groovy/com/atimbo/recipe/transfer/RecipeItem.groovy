@@ -10,10 +10,27 @@ import javax.validation.constraints.NotNull
  */
 class RecipeItem extends ATimboId implements Comparable {
 
+    /**
+     * Required.
+     *
+     * {@link RecipeItem}s will be translated as a {@link SortedSet}.
+     *
+     * MUST BE UNIQUE within a Set of type (e.g. RecipeSource, Ingredient)
+     * or not all items will be returned. Items with duplicate sort
+     * order values will be ignored.
+     */
+    @NotNull
     Integer sortOrder
 
     String lastUpdatedBy
 
+    /**
+     * Required.
+     *
+     * Used to martial {@link RecipeItem} to the correct
+     * RecipeItemBuilder.
+     */
+    @NotNull
     RecipeItemType type
 
     LocalDateTime dateCreated

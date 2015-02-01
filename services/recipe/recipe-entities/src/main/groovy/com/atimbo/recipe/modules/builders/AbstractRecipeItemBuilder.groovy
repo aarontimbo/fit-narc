@@ -13,7 +13,7 @@ abstract class AbstractRecipeItemBuilder {
     protected void baseBuilder(RecipeItemEntity recipeItemEntity, RecipeItem recipeItem) {
         recipeItemEntity.with {
             lastUpdatedBy = recipeItem.lastUpdatedBy ?: recipeItemEntity.createdBy
-            sortOrder     = recipeItem.sortOrder ?: 1
+            sortOrder     = recipeItem.sortOrder ?: recipeItemEntity.sortOrder
         }
 
         // Modify last updated date if the item exists
