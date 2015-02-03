@@ -33,7 +33,7 @@ class RecipeEntity {
                fetch = FetchType.EAGER,
                mappedBy = 'recipe',
                targetEntity = RecipeItemEntity)
-    Set<RecipeItemEntity> items
+    Set<RecipeItemEntity> items = []
 
     @Column(name = 'created_by', nullable = false, length = 50)
     String createdBy
@@ -50,6 +50,11 @@ class RecipeEntity {
     @Sort(type = SortType.NATURAL)
     SortedSet<RecipeSourceEntity> getSources() {
         return items.findAll{ it instanceof RecipeSourceEntity } as SortedSet
+    }
+
+    @Sort(type = SortType.NATURAL)
+    SortedSet<DirectionEntity> getDirections() {
+        return items.findAll{ it instanceof DirectionEntity } as SortedSet
     }
 
     @Sort(type = SortType.NATURAL)

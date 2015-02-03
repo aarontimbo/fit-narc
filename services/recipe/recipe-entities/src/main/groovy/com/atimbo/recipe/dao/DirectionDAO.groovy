@@ -4,6 +4,7 @@ import com.atimbo.recipe.domain.DirectionEntity
 import com.sun.jersey.api.NotFoundException
 import com.yammer.dropwizard.hibernate.AbstractDAO
 import org.hibernate.SessionFactory
+import org.hibernate.criterion.Restrictions
 import org.springframework.stereotype.Repository
 
 import javax.inject.Inject
@@ -16,7 +17,7 @@ class DirectionDAO extends AbstractDAO<DirectionEntity> {
         super(sessionFactory)
     }
 
-    DirectionEntity create(DirectionEntity directionEntity) {
+    DirectionEntity createOrUpdate(DirectionEntity directionEntity) {
         persist(directionEntity)
     }
 
@@ -26,6 +27,10 @@ class DirectionDAO extends AbstractDAO<DirectionEntity> {
             throw new NotFoundException("no direction found with id: ${id}")
         }
         return directionEntity
+    }
+
+    DirectionEntity findByUuId(String uuId) {
+        return uniqueResult(criteria().add(Restrictions.eq('uuId', uuId)))
     }
 
 }

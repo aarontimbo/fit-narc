@@ -1,5 +1,6 @@
 package com.atimbo.recipe.transfer
 
+import com.atimbo.common.RecipeItemType
 import com.atimbo.common.RecipeSourceType
 
 import javax.validation.constraints.NotNull
@@ -19,6 +20,8 @@ class RecipeSource extends RecipeItem {
 
     @NotNull
     RecipeSourceType sourceType
+
+    RecipeItemType type = RecipeItemType.RECIPE_SOURCE
 
     @Override
     boolean getRecipeSource() { true }

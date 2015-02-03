@@ -18,7 +18,7 @@ class IngredientDAOSpec extends DAOSpecification<IngredientDAO> {
         recipeEntity = new RecipeEntity(uuId: UniqueIDGenerator.generateUUId(),
                                         title: 'Meatstraganza!',
                                         createdBy: 'ast')
-        ingredient = new IngredientEntity(description: 'meat', createdBy: 'ast')
+        ingredient = new IngredientEntity(description: 'meat', sortOrder: 1,  createdBy: 'ast')
     }
 
     @Override
@@ -47,7 +47,7 @@ class IngredientDAOSpec extends DAOSpecification<IngredientDAO> {
         ingredient.recipe = recipeEntity
 
         when: 'creating the ingredient'
-        IngredientEntity expectedEntity = dao.create(ingredient)
+        IngredientEntity expectedEntity = dao.createOrUpdate(ingredient)
 
         then: 'the ingredient exists'
         expectedEntity
@@ -66,7 +66,7 @@ class IngredientDAOSpec extends DAOSpecification<IngredientDAO> {
         ingredient.recipe = recipeEntity
 
         when: 'creating the ingredient'
-        IngredientEntity expectedEntity = dao.create(ingredient)
+        IngredientEntity expectedEntity = dao.createOrUpdate(ingredient)
 
         then: 'the ingredient exists'
         expectedEntity

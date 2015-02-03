@@ -18,7 +18,7 @@ class DirectionDAOSpec extends DAOSpecification<DirectionDAO> {
         recipeEntity = new RecipeEntity(uuId: UniqueIDGenerator.generateUUId(),
                                         title: 'Meatstraganza!',
                                         createdBy: 'ast')
-        direction = new DirectionEntity(description: 'grill', createdBy: 'ast')
+        direction = new DirectionEntity(description: 'grill', sortOrder: 1, createdBy: 'ast')
     }
 
     @Override
@@ -47,12 +47,12 @@ class DirectionDAOSpec extends DAOSpecification<DirectionDAO> {
         direction.recipe = recipeEntity
 
         when: 'creating the direction'
-        DirectionEntity expectedEntity = dao.create(direction)
+        DirectionEntity expectedEntity = dao.createOrUpdate(direction)
 
         then: 'the direction exists'
         expectedEntity
 
-        when: 'getting the direction by id'
+        when: 'getting the direction by unique id'
         DirectionEntity directionEntity = dao.findById(expectedEntity.id)
 
         then: 'the direction is found'
