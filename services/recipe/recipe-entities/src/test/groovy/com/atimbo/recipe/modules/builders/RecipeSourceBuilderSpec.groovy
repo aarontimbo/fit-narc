@@ -41,6 +41,7 @@ class RecipeSourceBuilderSpec extends DatabaseSpecification {
         RecipeSource recipeSource = new RecipeSource(
                 author:     AUTHOR,
                 title:      TITLE,
+                sortOrder:  1,
                 sourceType: RecipeSourceType.COOKBOOK,
                 type:       itemType
         )
@@ -63,6 +64,7 @@ class RecipeSourceBuilderSpec extends DatabaseSpecification {
         RecipeSource recipeSource = new RecipeSource(
                 author:     AUTHOR,
                 title:      TITLE,
+                sortOrder:  1,
                 sourceType: RecipeSourceType.COOKBOOK,
                 type:       RecipeItemType.RECIPE_SOURCE
         )

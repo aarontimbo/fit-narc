@@ -1,14 +1,13 @@
 package com.atimbo.recipe.resources
 
+import com.atimbo.common.RecipeItemType
 import com.atimbo.common.RecipeSourceType
 import com.atimbo.recipe.dao.DAOFactory
 import com.atimbo.recipe.dao.TestDAOFactory
 import com.atimbo.recipe.domain.RecipeEntity
-import com.atimbo.recipe.domain.RecipeSourceEntity
+import com.atimbo.recipe.modules.RecipeItemModule
 import com.atimbo.recipe.modules.RecipeModule
-import com.atimbo.recipe.modules.RecipeSourceModule
 import com.atimbo.recipe.modules.builders.RecipeBuilder
-import com.atimbo.recipe.modules.builders.RecipeSourceBuilder
 import com.atimbo.recipe.transfer.Recipe
 import com.atimbo.recipe.transfer.RecipeCreateUpdateRequest
 import com.atimbo.recipe.transfer.RecipeSource
@@ -24,7 +23,7 @@ class RecipeResourceSpec extends DatabaseSpecification {
     RecipeBuilder recipeBuilder
     RecipeModule recipeModule
     RecipeResource recipeResource
-    RecipeSourceModule recipeSourceModule
+    RecipeItemModule recipeItemModule
 
     @Override
     def setup() {
@@ -35,9 +34,8 @@ class RecipeResourceSpec extends DatabaseSpecification {
         recipeModule = new RecipeModule(daoFactory)
         recipeModule.recipeBuilder = recipeBuilder
 
-        recipeSourceModule = new RecipeSourceModule(daoFactory)
-        recipeSourceModule.recipeSourceBuilder = new RecipeSourceBuilder()
-        recipeModule.recipeSourceModule = recipeSourceModule
+        recipeItemModule = new RecipeItemModule(daoFactory)
+        recipeModule.recipeItemModule = recipeItemModule
 
         recipeResource = new RecipeResource(recipeModule, objectMapper)
     }
@@ -112,12 +110,13 @@ class RecipeResourceSpec extends DatabaseSpecification {
 
         and: 'a recipe source'
         RecipeSource recipeSourceTO = new RecipeSource(
-                author: 'Me at',
-                title:  'How to Cook Meat',
+                author:     'Me at',
+                title:      'How to Cook Meat',
                 sourceType: RecipeSourceType.COOKBOOK,
-                sortOrder: 1
+                sortOrder:  1,
+                type:       RecipeItemType.RECIPE_SOURCE
         )
-        request.recipeSource = recipeSourceTO
+        request.sources << recipeSourceTO
 
         when: 'we get a recipe from a request'
         Recipe recipeTO = recipeResource.getRecipe(request)
@@ -126,7 +125,7 @@ class RecipeResourceSpec extends DatabaseSpecification {
         recipeTO
         recipeTO.uuId
         recipeTO.title == TITLE
-        recipeTO.recipeSource
+        recipeTO.sources.size() == 1
     }
 
 }

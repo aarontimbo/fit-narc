@@ -33,7 +33,7 @@ class RecipeEntity {
                fetch = FetchType.EAGER,
                mappedBy = 'recipe',
                targetEntity = RecipeItemEntity)
-    Set<RecipeItemEntity> items
+    Set<RecipeItemEntity> items = []
 
     @Column(name = 'created_by', nullable = false, length = 50)
     String createdBy

@@ -20,7 +20,8 @@ class RecipeSourceDAOSpec extends DAOSpecification<RecipeSourceDAO> {
                                         createdBy: 'ast')
         recipeSource = new RecipeSourceEntity(author: 'Swedish Chef',
                                               title: 'Swedish Meatballs',
-                                              createdBy: 'ast')
+                                              createdBy: 'ast',
+                                              sortOrder: 1)
     }
 
     @Override
