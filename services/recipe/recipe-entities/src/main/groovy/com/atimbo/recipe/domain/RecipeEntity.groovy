@@ -53,6 +53,11 @@ class RecipeEntity {
     }
 
     @Sort(type = SortType.NATURAL)
+    SortedSet<DirectionEntity> getDirections() {
+        return items.findAll{ it instanceof DirectionEntity } as SortedSet
+    }
+
+    @Sort(type = SortType.NATURAL)
     SortedSet<IngredientEntity> getIngredients() {
         return items.findAll{ it instanceof IngredientEntity } as SortedSet
     }

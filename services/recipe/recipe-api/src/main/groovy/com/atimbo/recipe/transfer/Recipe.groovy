@@ -20,6 +20,8 @@ class Recipe extends ATimboId {
 
     List<Ingredient> ingredients = []
 
+    List<Direction> directions = []
+
     @NotNull
     String createdBy
 

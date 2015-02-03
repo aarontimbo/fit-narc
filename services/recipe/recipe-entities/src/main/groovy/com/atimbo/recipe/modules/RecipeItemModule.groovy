@@ -5,6 +5,7 @@ import com.atimbo.recipe.dao.DirectionDAO
 import com.atimbo.recipe.dao.IngredientDAO
 import com.atimbo.recipe.domain.RecipeEntity
 import com.atimbo.recipe.domain.RecipeItemEntity
+import com.atimbo.recipe.modules.builders.DirectionBuilder
 import com.atimbo.recipe.modules.builders.IngredientBuilder
 import com.atimbo.recipe.modules.builders.RecipeItemBuilder
 import com.atimbo.recipe.modules.builders.RecipeSourceBuilder
@@ -40,8 +41,9 @@ class RecipeItemModule {
     }
 
     private void init(DAOFactory daoFactory) {
-        builders << new RecipeSourceBuilder(daoFactory)
+        builders << new DirectionBuilder(daoFactory)
         builders << new IngredientBuilder(daoFactory)
+        builders << new RecipeSourceBuilder(daoFactory)
     }
 
 }
