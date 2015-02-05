@@ -28,6 +28,9 @@ class RecipeEntity {
     @Column(name = 'description', nullable = true)
     String description
 
+    @Column(name = 'servings', nullable = false)
+    Integer servings
+
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL,
                fetch = FetchType.EAGER,

@@ -16,6 +16,9 @@ class Recipe extends ATimboId {
 
     String description
 
+    @NotNull
+    Integer servings
+
     List<RecipeSource> sources = []
 
     List<Ingredient> ingredients = []

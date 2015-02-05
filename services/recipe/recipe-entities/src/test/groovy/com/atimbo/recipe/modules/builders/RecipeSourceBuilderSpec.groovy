@@ -14,6 +14,7 @@ import spock.lang.Unroll
 class RecipeSourceBuilderSpec extends DatabaseSpecification {
 
     private static final String AUTHOR = 'Willy Wonka'
+    private static final Integer SERVINGS  = 4
     private static final String TITLE  = 'Death by Chocolate'
 
     EntityBuilder entityBuilder
@@ -22,7 +23,9 @@ class RecipeSourceBuilderSpec extends DatabaseSpecification {
 
     @Override
     void setup() {
-        recipeEntity = new RecipeEntity(title: 'Meatstraganza!', createdBy: 'ast')
+        recipeEntity = new RecipeEntity(title: 'Meatstraganza!',
+                                        createdBy: 'ast',
+                                        servings: SERVINGS)
         entityBuilder = new EntityBuilder(sessionFactory)
         entityBuilder.save(recipeEntity)
 

@@ -17,7 +17,8 @@ class IngredientDAOSpec extends DAOSpecification<IngredientDAO> {
         builder = new EntityBuilder(sessionFactory)
         recipeEntity = new RecipeEntity(uuId: UniqueIDGenerator.generateUUId(),
                                         title: 'Meatstraganza!',
-                                        createdBy: 'ast')
+                                        createdBy: 'ast',
+                                        servings: 4)
         ingredient = new IngredientEntity(description: 'meat', sortOrder: 1,  createdBy: 'ast')
     }
 

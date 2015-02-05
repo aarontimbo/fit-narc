@@ -17,7 +17,8 @@ class DirectionDAOSpec extends DAOSpecification<DirectionDAO> {
         builder = new EntityBuilder(sessionFactory)
         recipeEntity = new RecipeEntity(uuId: UniqueIDGenerator.generateUUId(),
                                         title: 'Meatstraganza!',
-                                        createdBy: 'ast')
+                                        createdBy: 'ast',
+                                        servings: 4)
         direction = new DirectionEntity(description: 'grill', sortOrder: 1, createdBy: 'ast')
     }
 
