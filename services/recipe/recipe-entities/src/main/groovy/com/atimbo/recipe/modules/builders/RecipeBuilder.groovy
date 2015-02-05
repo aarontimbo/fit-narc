@@ -14,6 +14,7 @@ class RecipeBuilder {
             title         = request.title
             description   = request.description
             lastUpdatedBy = request.updatedBy ?: request.createdBy
+            servings      = request.servings
         }
         if (!recipeEntity.createdBy) {
             recipeEntity.createdBy = request.createdBy

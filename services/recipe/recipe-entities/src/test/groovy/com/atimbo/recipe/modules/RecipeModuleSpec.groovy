@@ -10,6 +10,11 @@ import com.atimbo.test.dao.DatabaseSpecification
 
 class RecipeModuleSpec extends DatabaseSpecification {
 
+    private static final String TITLE      = 'meatstraganza'
+    private static final String DESC       = 'meaty goodness'
+    private static final String CREATED_BY = 'ast'
+    private static final Integer SERVINGS  = 4
+
     EntityBuilder entityBuilder
     RecipeBuilder recipeBuilder
     RecipeModule module
@@ -35,9 +40,10 @@ class RecipeModuleSpec extends DatabaseSpecification {
     void 'create a recipe from a create request'() {
         given:
         RecipeCreateUpdateRequest request = new RecipeCreateUpdateRequest(
-                title: 'meatstraganza',
-                description: 'meaty goodness',
-                createdBy: 'ast'
+                title:       TITLE,
+                description: DESC,
+                createdBy:   CREATED_BY,
+                servings:    SERVINGS
         )
 
         when:
@@ -54,15 +60,18 @@ class RecipeModuleSpec extends DatabaseSpecification {
 
     void 'update existing recipe from a request'() {
         given: 'an existing recipe'
-        RecipeEntity existingRecipe = new RecipeEntity(title: 'not enough meat', createdBy: 'tsa')
+        RecipeEntity existingRecipe = new RecipeEntity(title: 'not enough meat',
+                                                       createdBy: 'tsa',
+                                                       servings: 4)
         entityBuilder.save(existingRecipe)
 
         and: 'a update request'
         RecipeCreateUpdateRequest request = new RecipeCreateUpdateRequest(
                 uuId:        existingRecipe.uuId,
-                title:       'meatstraganza',
-                description: 'meaty goodness',
-                createdBy:   'ast'
+                title:       TITLE,
+                description: DESC,
+                createdBy:   CREATED_BY,
+                servings:    SERVINGS
         )
 
         when:

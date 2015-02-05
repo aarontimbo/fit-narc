@@ -20,6 +20,10 @@ class RecipeCreateUpdateRequest {
     /** Long description of the recipe */
     String description
 
+    /** Number of servings the recipe yields */
+    @NotNull
+    Integer servings
+
     List<RecipeSource> sources = []
 
     List<Ingredient> ingredients = []

@@ -17,7 +17,8 @@ class RecipeSourceDAOSpec extends DAOSpecification<RecipeSourceDAO> {
         builder = new EntityBuilder(sessionFactory)
         recipeEntity = new RecipeEntity(uuId: UniqueIDGenerator.generateUUId(),
                                         title: 'Meatstraganza!',
-                                        createdBy: 'ast')
+                                        createdBy: 'ast',
+                                        servings: 4)
         recipeSource = new RecipeSourceEntity(author: 'Swedish Chef',
                                               title: 'Swedish Meatballs',
                                               createdBy: 'ast',

@@ -189,4 +189,19 @@
                           tableName="recipe_item"/>
     </changeSet>
 
+
+    <changeSet author="ast" id="add-servings-col-to-recipe">
+        <addColumn tableName="recipe">
+            <column name="servings" type="INT">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+
+        <sql>
+            UPDATE recipe
+            SET servings = 1
+            WHERE servings IS NULL;
+        </sql>
+    </changeSet>
+
 </databaseChangeLog>

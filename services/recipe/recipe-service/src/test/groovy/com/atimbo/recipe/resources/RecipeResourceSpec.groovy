@@ -18,6 +18,7 @@ class RecipeResourceSpec extends DatabaseSpecification {
 
     private static final String TITLE = 'Spicy Ribs'
     private static final String CREATED_BY = 'ast'
+    private static final Integer SERVINGS = 4
 
     EntityBuilder entityBuilder
     RecipeBuilder recipeBuilder
@@ -48,7 +49,11 @@ class RecipeResourceSpec extends DatabaseSpecification {
 
     void 'find existing recipe by unique identifier'() {
         given:
-        RecipeEntity recipeEntity = new RecipeEntity(title: TITLE, createdBy: CREATED_BY)
+        RecipeEntity recipeEntity = new RecipeEntity(
+                title:     TITLE,
+                createdBy: CREATED_BY,
+                servings:  SERVINGS
+        )
         entityBuilder.save(recipeEntity)
 
         when:
@@ -63,7 +68,8 @@ class RecipeResourceSpec extends DatabaseSpecification {
         given: 'a recipe create request'
         RecipeCreateUpdateRequest request = new RecipeCreateUpdateRequest(
             title: TITLE,
-            createdBy: CREATED_BY
+            createdBy: CREATED_BY,
+            servings: SERVINGS
         )
 
         when: 'we get a recipe from a request'
@@ -72,20 +78,26 @@ class RecipeResourceSpec extends DatabaseSpecification {
         then: 'the recipe is created'
         recipeTO
         recipeTO.uuId
-        recipeTO.title == TITLE
+        recipeTO.title    == TITLE
+        recipeTO.servings == SERVINGS
     }
 
     void 'update existing recipe from request'() {
         given: 'an existing recipe'
-        RecipeEntity recipeEntity = new RecipeEntity(title: TITLE, createdBy: CREATED_BY)
+        RecipeEntity recipeEntity = new RecipeEntity(
+                title:     TITLE,
+                createdBy: CREATED_BY,
+                servings:  SERVINGS
+        )
         entityBuilder.save(recipeEntity)
 
         and: 'a recipe create request'
         RecipeCreateUpdateRequest request = new RecipeCreateUpdateRequest(
-                uuId: recipeEntity.uuId,
-                title: TITLE,
+                uuId:        recipeEntity.uuId,
+                title:       TITLE,
                 description: 'succulent pork ribs',
-                updatedBy: 'tsa'
+                servings:    SERVINGS,
+                updatedBy:   'tsa'
         )
 
         when: 'we get a recipe from a request'
@@ -96,6 +108,7 @@ class RecipeResourceSpec extends DatabaseSpecification {
         with(recipeTO) {
             uuId          == recipeEntity.uuId
             title         == TITLE
+            servings      == SERVINGS
             description   == request.description
             lastUpdatedBy == request.updatedBy
         }
@@ -104,8 +117,9 @@ class RecipeResourceSpec extends DatabaseSpecification {
     void 'create recipe from request with recipe items'() {
         given: 'a recipe create request'
         RecipeCreateUpdateRequest request = new RecipeCreateUpdateRequest(
-                title: TITLE,
-                createdBy: CREATED_BY
+                title:     TITLE,
+                createdBy: CREATED_BY,
+                servings:  SERVINGS
         )
 
         and: 'a recipe source'
